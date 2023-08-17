@@ -29,7 +29,7 @@ public class Main {
         // Jett.introduce();
         // Jett.talkTo("Viper");
         // Jett.talkToCharacter(Raze);
-
+        
         // Student george = new Student("George", "Gesite", 4, "Computer Engineering", "A", 95, 99);
         // george.displayInfo();
 
@@ -57,8 +57,5 @@ public class Main {
         // System.out.println(obj2.getAttribute() + " : " + obj2.getAttribute2());
         // MyClass obj3 = new MyClass(20, "Custom Value");
         // System.out.println(obj3.getAttribute() + " : " + obj3.getAttribute2());
-    
-
-
     }
 }
