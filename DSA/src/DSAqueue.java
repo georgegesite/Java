@@ -16,5 +16,6 @@ public class DSAqueue {
         System.out.println("Dequeued: " + queue.poll());
 
         System.out.println("Size of queue: " + queue.size());
+        System.out.println("Size of queue: " + queue.size());
     }
 }
