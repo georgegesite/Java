@@ -1,3 +1,4 @@
+import java.util.HashMap;
 
 public class Calculations {
 
@@ -61,5 +62,28 @@ public class Calculations {
 		}
 		
 		return binary;
+	}
+	
+	/**
+	 * Two Sum Leetcode Question
+	 * 
+	 * @param numberList
+	 * @param sum
+	 * @return indexes of points
+	 */
+	public static String twoSum (int[] numberList, int sum) {
+		
+		HashMap<Integer, Integer> list = new HashMap<>();
+		
+		for(int i = 0; i < numberList.length; i++) {
+			int temp = sum - numberList[i];
+			if(list.containsKey(temp)) {
+				return "[" + list.get(temp) +", " + i +"]";
+			} else {
+				list.put(numberList[i], i);
+			}
+		}
+		
+		return "Non-existent";
 	}
 }

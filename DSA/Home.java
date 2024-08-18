@@ -16,9 +16,12 @@ public class Home {
 //		String binary = scan.nextLine();
 //		System.out.println("Decimal: " + Calculations.binaryToDecimal(binary));
 		
-		System.out.println("Enter Decimal");
-		int decimal = scan.nextInt();
-		System.out.println("Binary: " + Calculations.decimalToBinary(decimal));
+//		System.out.println("Enter Decimal");
+//		int decimal = scan.nextInt();
+//		System.out.println("Binary: " + Calculations.decimalToBinary(decimal));
+		
+		int[] list = { 1,2,3,4,5,6,7,8,9,10 };
+		System.out.println("TwoSum: " + Calculations.twoSum(list, 3));
 		
 		scan.close();
 	}
