@@ -48,17 +48,13 @@ public class Calculations {
 	public static String decimalToBinary(int decimal) {
 		String binary = "";
 		int base = 2;
-		boolean check = true;
-		while(check) {
+		while(decimal != 0) {
 			if(decimal % base == 1) {
 				binary = "1" + binary;
 			} else {
 				binary = "0" + binary;
 			}
 			decimal = decimal / base;
-			if(decimal == 0) {
-				check = false;
-			}
 		}
 		
 		return binary;
