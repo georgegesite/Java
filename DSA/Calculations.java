@@ -64,22 +64,23 @@ public class Calculations {
 	 * Two Sum Leetcode Question
 	 * 
 	 * @param numberList
-	 * @param sum
+	 * @param target
 	 * @return indexes of points
 	 */
-	public static String twoSum (int[] numberList, int sum) {
-		
-		HashMap<Integer, Integer> list = new HashMap<>();
-		
-		for(int i = 0; i < numberList.length; i++) {
-			int temp = sum - numberList[i];
-			if(list.containsKey(temp)) {
-				return "[" + list.get(temp) +", " + i +"]";
-			} else {
-				list.put(numberList[i], i);
-			}
-		}
-		
-		return "Non-existent";
-	}
+    public static int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            
+            if (map.containsKey(complement)) {
+                return new int[] { map.get(complement), i };
+            }
+            
+            map.put(nums[i], i);
+        }
+        
+        // If no solution is found
+        return new int[0];
+    }
 }
