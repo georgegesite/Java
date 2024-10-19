@@ -1,9 +1,2 @@
-# Ignore any .class files
 .class
 *.class
-
-# Ignore .vscode folder
-.vscode
-
-# Ignore bin directory
-bin/
