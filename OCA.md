@@ -53,23 +53,27 @@ public class Conflicts { java.util.Date date; java.sql.Date sqlDate; }
 
 You’ll also see code that doesn’t have a main() method. When this happens, assume the main() method, class definition, and all necessary imports are present. You’re just being asked if the part of the code you’re shown compiles when dropped into valid surrounding code.
 
-#Creating Objects
+# Creating Objects
 
 object is an instance of a class
 
-##Constructors
+## Constructors
+
 It’s called a constructor, which is a special type of method that creates a new Object
 For most classes, you don’t have to code a constructor—the compiler will supply a “do nothing” default constructor for you.
 
-##Reading and Writing Object fields
+## Reading and Writing Object fields
+
 It’s possible to read and write instance variables directly from the caller
 
-##Instance Initializer Blocks
+## Instance Initializer Blocks
+
 The code between the braces is called a code block.
 Other times, code blocks appear outside a method. These are called instance initializers
 
-##Order of Initialization
+## Order of Initialization
+
 Fields and instance initializer blocks are run in the order in which they appear in the file.
 The constructor runs after all fields and instance initializer blocks have run.
 
-#Distinguishing Between Object References and Primitives
+# Distinguishing Between Object References and Primitives
