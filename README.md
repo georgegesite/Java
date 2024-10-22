@@ -9,7 +9,6 @@
   - Can contain digits, but cannot start with them.
   - Cannot include special characters like a dot (`.`), comma (`,`), or slash (`/`).
   - Cannot be equal to reserved words like `class`, `int`, `public`, etc.
-    s
 
 ## Strings
 
@@ -67,3 +66,9 @@ System.out.println(test((i) -> i == 5));
 System.out.println(test((i) -> { return i == 5; }));
 
 ```
+
+Classes are basic building blocks
+Variables hold the data and methods are responsible to do an action based on the instructions given
+Comments are ignored by the compiler, it is used for documentation purposes
+The main method is the entry point of any java program the JVM tries to find the method to execute the code in it.
+A java file can only contain one public class
