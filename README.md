@@ -72,3 +72,6 @@ Variables hold the data and methods are responsible to do an action based on the
 Comments are ignored by the compiler, it is used for documentation purposes
 The main method is the entry point of any java program the JVM tries to find the method to execute the code in it.
 A java file can only contain one public class
+
+“Legal,” “valid,” and “compiles” are all synonyms in the Java exam
+world.
