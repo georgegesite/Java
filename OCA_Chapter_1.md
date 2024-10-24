@@ -1,4 +1,4 @@
-#Understanding the Java Class Structure
+# Understanding the Java Class Structure
 
 Classes are the basic building blocks
 Objects are runtime instance of a class in memory
@@ -9,9 +9,10 @@ Members of a class
 
 - Fields
 - Methods
-  void means that no value at all is returned.
-  This method requires information be supplied to it from the calling method this information is called a parameter.
-  The full declaration of a method is called a method signature.
+
+void means that no value at all is returned.
+This method requires information be supplied to it from the calling method this information is called a parameter.
+The full declaration of a method is called a method signature.
 
 ## Comments
 
@@ -95,8 +96,10 @@ Java allows you to specify digits in several other formats:
 ■ octal (digits 0–7), which uses the number 0 as a prefix—for example, 017
 ■ hexadecimal (digits 0–9 and letters A–F), which uses the number 0 followed by x or X as a prefix—for example, 0xFF
 ■ binary (digits 0–1), which uses the number 0 followed by b or B as a prefix—for example, 0b10
+can be assigned to many primitive types, including int and double
 
-You can add underscores anywhere except at the beginning of a literal, the end of a literal, right before a decimal point, or right after a decimal point.
+You can add underscores anywhere
+except at the beginning of a literal, the end of a literal, right before a decimal point, or right after a decimal point.
 
 ## Reference Types
 
@@ -156,6 +159,7 @@ Before you can use a variable, it needs a value.
 
 A local variable is a variable defi ned within a method.
 Local variables must be initialized before use.
+local variables do not get assigned default values.
 
 ## Instance and Class variables
 
@@ -237,7 +241,8 @@ When an object is instantiated, fi elds and blocks of code are initialized first
 
 Primitive types are the basic building blocks of Java types. They are assembled into reference types.
 Reference types can have methods and be assigned to null.
-In addition to“normal” numbers, numeric literals are allowed to begin with 0 (octal), 0x (hex), 0X (hex), 0b (binary), or 0B (binary). Numeric literals are also allowed to contain underscores as long as they are directly between two other numbers.
+In addition to“normal” numbers, numeric literals are allowed to begin with 0 (octal), 0x (hex), 0X (hex), 0b (binary), or 0B (binary).
+Numeric literals are also allowed to contain underscores as long as they are directly between two other numbers.
 
 Declaring a variable involves stating the data type and giving the variable a name.
 Variables that represent f elds in a class are automatically initialized to their corresponding “zero” or null value during object instantiation.
@@ -262,3 +267,29 @@ Java code is object oriented, meaning all code is defi ned in classes.
 Access modifiers allow classes to encapsulate data. Java is platform independent, compiling to bytecode.
 It is robust and simple by not providing pointers or operator overloading.
 Finally, Java is secure because it runs inside a virtual machine.
+
+# Review Questions result
+
+/1. A, B, E
+/2. D
+/3. B, D, E
+/4. A, B
+/5. C, D
+O6. D | E import can be removed since in same package
+/7. A, B , C
+O8. D, F | B
+/9. A, C, D, E
+/10. E  
+/11. C, D
+O12. C | G local variables cannot have default values
+/13. A, D
+/14. D
+/15. A, E
+O16. B, C | B, C, D hex can be assigned to double
+/17. A, E
+O18. C | C, D, E package, import class | package, class | import class|
+/19. B, D
+O20. B, D | B, E
+O21. F | A
+/22. B, E
+/23. C, D
