@@ -287,7 +287,7 @@ O12. C | G local variables cannot have default values
 /15. A, E
 O16. B, C | B, C, D hex can be assigned to double
 /17. A, E
-O18. C | C, D, E package, import class | package, class | import class|
+O18. C | C, D, E package, import class | package, class | import class
 /19. B, D
 O20. B, D | B, E
 O21. F | A
