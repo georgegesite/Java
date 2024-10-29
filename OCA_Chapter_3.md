@@ -302,6 +302,346 @@ int numAnimals3[];
 int numAnimals4 [];
 ```
 
+Arrays can be initialized using anonymous initializers.
+For example:
+
+```java
+int[] numbers = {1, 2, 3, 4}; // Declaration and initialization at the same time.
+```
+
 ## Creating an Array with Reference Variable
 
-167/198
+```java
+class Names {
+ String names[]; // code never instantiated the array so it is just a reference variable to null
+}
+```
+
+```java
+class Names {
+ String names[] = new String[2]; // array of type String, length = 2, each slot is currently null.
+}
+```
+
+## Using an Array
+
+```java
+public static void main(String[] args) {
+        String[] mammals = { "monkey", "chimp", "donkey" };
+        mammals[3] = "cat"; // throws exception
+        System.out.println(mammals);
+    }
+```
+
+## Sorting
+
+```java
+import java.util.* // import whole package including Arrays
+import java.util.Arrays; // import just Arrays
+
+int[] numbers = { 6, 9, 1 };
+Arrays.sort(numbers);
+for (int i = 0; i < numbers.length; i++)
+System.out.print (numbers[i] + " "); // Outputs 1 6 9
+```
+
+Sort can be also used with String types
+
+```java
+String[] strings = { "10", "9", "100" };
+Arrays.sort(strings);
+for (String string : strings)
+ System.out.print(string + " "); // Outputs: 10 100 9 String sorts in alphabetic order
+```
+
+Numbers sort before letters & uppercase sorts before lowercase
+
+## Searching
+
+Java also provides a convenient way to search—but only if the array is already sorted.
+
+```java
+import java.util.Arrays;
+
+/**
+ * Search
+ */
+public class Search {
+
+    public static void main(String[] args) {
+        int[] numbers = { 2, 4, 6, 8 };
+        System.out.println(Arrays.binarySearch(numbers, 2)); // 0
+        System.out.println(Arrays.binarySearch(numbers, 4)); // 1
+        System.out.println(Arrays.binarySearch(numbers, 1)); // -1
+        System.out.println(Arrays.binarySearch(numbers, 3)); // -2
+        System.out.println(Arrays.binarySearch(numbers, 9)); // -5 | 9 should be inserted at index 4. we negate = -4 and subtract 1 = -5
+    }
+}
+```
+
+As soon as you see the array isn’t sorted, look for an answer choice about unpredictable output.
+On the exam, you need to know what a binary search returns in various scenarios
+
+## Varargs
+
+```java
+public static void main(String[] args)
+public static void main(String args[])
+public static void main(String... args) // varargs - syntax called varargs (variable arguments)
+```
+
+## Multidimensional Arrays
+
+arrays can hold other arrays
+
+## Creating a Multidimensional Array
+
+```java
+int[][] vars1; // 2D array
+int vars2 [][]; // 2D array
+int[] vars3[]; // 2D array
+int[] vars4 [], space [][]; // a 2D AND a 3D array
+
+//You can specify the size of your multidimensional array in the declaration
+String [][] rectangle = new String[3][2];
+```
+
+Another way to create an asymmetric array is to initialize just an array’s fi rst dimension
+and defi ne the size of each array component in a separate statement:
+
+```java
+int [][] args = new int[4][];
+args[0] = new int[5];
+args[1] = new int[3];
+```
+
+## Using a Multidimensional Array
+
+```java
+int[][] twoD = new int[3][2];
+for (int i = 0; i < twoD.length; i++) {
+ for (int j = 0; j < twoD[i].length; j++)
+ System.out.print(twoD[i][j] + " "); // print element
+ System.out.println(); // time for a new row
+}
+
+// Enhanced For Loop
+for (int[] inner : twoD) {
+ for (int num : inner)
+ System.out.print(num + " ");
+ System.out.println();
+}
+```
+
+# Understanding an ArrayList
+
+Just like a StringBuilder, ArrayList can change size at runtime as needed.
+
+```java
+import java.util.*; // import whole package including ArrayList
+import java.util.ArrayList; // import just ArrayList
+```
+
+## Creating an ArrayList
+
+```java
+ArrayList list1 = new ArrayList();  //create an ArrayList containing space for the default number of elements
+ArrayList list2 = new ArrayList(10); //create an ArrayList containing a specific number of slots
+ArrayList list3 = new ArrayList(list2); //copy of another ArrayList
+
+//Generics - which allow you to specify the type of class that the ArrayList will contain.
+ArrayList<String> list4 = new ArrayList<String>();
+ArrayList<String> list5 = new ArrayList<>();
+```
+
+This is called the diamond operator because <> looks like a diamond.
+an ArrayList is a List.
+you can store an ArrayList in a List reference variable but not vice versa.
+The reason is that List is an interface and interfaces can’t be instantiated.
+
+```java
+List<String> list6 = new ArrayList<>();
+ArrayList<String> list7 = new List<>(); // DOES NOT COMPILE
+```
+
+## Using an Arraylist
+
+`E` is used by convention in generics to mean “any class that this array can hold.”
+E means Object
+
+The `add()` methods insert a new value in the ArrayList.
+boolean add(E element)
+void add(int index, E element)
+
+```java
+ArrayList list = new ArrayList(); // type is object
+list.add("hawk"); // [hawk]
+list.add(Boolean.TRUE); // [hawk, true]
+System.out.println(list); // [hawk, true]
+
+
+ArrayList<String> safer = new ArrayList<>(); // type is String
+safer.add("sparrow");
+safer.add(Boolean.TRUE); // DOES NOT COMPILE
+
+List<String> birds = new ArrayList<>();
+birds.add("hawk"); // [hawk]
+birds.add(1, "robin"); // [hawk, robin]
+birds.add(0, "blue jay"); // [blue jay, hawk, robin]
+birds.add(1, "cardinal"); // [blue jay, cardinal, hawk, robin]
+System.out.println(birds); // [blue jay, cardinal, hawk, robin]
+```
+
+The `remove()` methods remove the fi rst matching value in the ArrayList or remove the element at a specified index.
+boolean remove(Object object)
+E remove(int index)
+
+```java
+List<String> birds = new ArrayList<>(); // of type String
+birds.add("hawk"); // [hawk]
+birds.add("hawk"); // [hawk, hawk]
+System.out.println(birds.remove("cardinal")); // prints false
+System.out.println(birds.remove("hawk")); // prints true
+System.out.println(birds.remove(0)); // prints hawk
+System.out.println(birds); // []
+```
+
+The `set()` method changes one of the elements of the ArrayList without changing the size.
+E set(int index, E newElement)
+
+```java
+List<String> birds = new ArrayList<>();
+birds.add("hawk"); // [hawk]
+System.out.println(birds.size()); // 1
+birds.set(0, "robin"); // [robin]
+System.out.println(birds.size()); // 1
+birds.set(1, "robin"); // IndexOutOfBoundsException
+```
+
+The `isEmpty()` and `size()` methods look at how many of the slots are in use.
+boolean isEmpty()
+int size()
+
+```java
+System.out.println(birds.isEmpty()); // true
+System.out.println(birds.size()); // 0
+birds.add("hawk"); // [hawk]
+birds.add("hawk"); // [hawk, hawk]
+System.out.println(birds.isEmpty()); // false
+System.out.println(birds.size()); // 2
+```
+
+The `clear()` method provides an easy way to discard all elements of the ArrayList
+void clear()
+
+```java
+List<String> birds = new ArrayList<>();
+birds.add("hawk"); // [hawk]
+birds.add("hawk"); // [hawk, hawk]
+System.out.println(birds.isEmpty()); // false
+System.out.println(birds.size()); // 2
+birds.clear(); // []
+System.out.println(birds.isEmpty()); // true
+System.out.println(birds.size()); // 0
+```
+
+The `contains()` method checks whether a certain value is in the ArrayList
+boolean contains(Object object)
+
+```java
+List<String> birds = new ArrayList<>();
+birds.add("hawk"); // [hawk]
+System.out.println(birds.contains("hawk")); // true
+System.out.println(birds.contains("robin")); // false
+```
+
+ArrayList has a custom implementation of `equals()` so you can compare two lists
+to see if they contain the same elements in the same order.
+boolean equals(Object object)
+
+```java
+List<String> one = new ArrayList<>();
+List<String> two = new ArrayList<>();
+System.out.println(one.equals(two)); // true
+one.add("a"); // [a]
+System.out.println(one.equals(two)); // false
+two.add("a"); // [a]
+System.out.println(one.equals(two)); // true
+one.add("b"); // [a,b]
+two.add(0, "b"); // [b,a]
+System.out.println(one.equals(two)); // false
+```
+
+add()
+remove()
+set()
+isEmpty()
+size()
+clear()
+contains()
+equals()
+
+## Wrapper Classes
+
+Each primitive type has a wrapper class
+![alt text](image.png)
+
+The parse methods, such as parseInt(), return a primitive
+and the valueOf() method returns a wrapper class
+
+```java
+int primitive = Integer.parseInt("123"); //converts a String to an int primitive
+Integer wrapper = Integer.valueOf("123"); // converts a String to an Integer wrapper class.
+
+// letters and dots are not valid for an integer value
+int bad1 = Integer.parseInt("a"); // throws NumberFormatException
+Integer bad2 = Integer.valueOf("123.45"); // throws NumberFormatException
+```
+
+Converting String to primitive
+
+```java
+Boolean.parseBoolean("true");
+Byte.parseByte("1");
+Short.parseShort("1");
+Integer.parseInt("1");
+Long.parseLong("1");
+Float.parseFloat("1");
+Double.parseDouble("1");
+```
+
+Converting String to wrapper class
+
+```java
+Boolean.valueOf("TRUE");
+Byte.valueOf("2");
+Short.valueOf("2");
+Integer.valueOf("2");
+Long.valueOf("2");
+Float.valueOf("2.2");
+Double.valueOf("2.2");
+```
+
+## Autoboxing
+
+## Converting Between array and List
+
+## Sorting
+
+# Working with Dates and Times
+
+## Creating Dates and Times
+
+## Manipulating Dates and Times
+
+## Working with Periods
+
+## Formatting Dates and Times
+
+## Parsing Dates and Times
+
+# Summary
+
+# Review Question Results
+
+182/198
