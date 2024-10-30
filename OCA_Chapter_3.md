@@ -624,24 +624,310 @@ Double.valueOf("2.2");
 
 ## Autoboxing
 
+Autoboxes - passing primitive to Wrapper class
+Unboxes - retrieves Wrapper class and unboxes it into primitive
+
+```java
+List<Integer> numbers = new ArrayList<>();
+numbers.add(1);
+numbers.add(2);
+numbers.remove(1); // it is treated as index, must use .remove(new Integer(2)) to force wrapper class use
+System.out.println(numbers);
+```
+
 ## Converting Between array and List
+
+Converting List to array
+
+```java
+List<String> list = new ArrayList<>();
+list.add("hawk");
+list.add("robin");
+Object[] objectArray = list.toArray();  //  defaults to an array of class Object
+System.out.println(objectArray.length); // 2
+String[] stringArray = list.toArray(new String[0]);  // specifi es the type of the array
+System.out.println(stringArray.length); // 2
+```
+
+Converting array to List
+
+```java
+String[] array = { "hawk", "robin" }; // [hawk, robin]
+List<String> list = Arrays.asList(array); // returns fixed size list, backed version of a List
+System.out.println(list.size()); // 2
+list.set(1, "test"); // [hawk, test]
+array[0] = "new"; // [new, test]
+for (String b : array) System.out.print(b + " "); // new test
+list.remove(1); // throws UnsupportedOperation Exception becuase we are not allowed to change the size of the list
+```
 
 ## Sorting
 
+Sorting an ArrayList is very similar to sorting an array
+
+```java
+List<Integer> numbers = new ArrayList<>();
+numbers.add(99);
+numbers.add(5);
+numbers.add(81);
+Collections.sort(numbers); // Different Helper class is used
+System.out.println(numbers); [5, 81, 99]
+```
+
 # Working with Dates and Times
+
+```java
+import java.time.*; // import time classes
+```
 
 ## Creating Dates and Times
 
+`LocalDate` Contains just a date—no time and no time zone
+`LocalTime` Contains just a time—no date and no time zone
+`LocalDateTime` Contains both a date and time but no time zone
+
+```java
+System.out.println(LocalDate.now()); // 2015-01-20
+System.out.println(LocalTime.now()); // 12:45:18.401 -  hours, minutes, seconds, and nanoseconds.
+System.out.println(LocalDateTime.now()); // 2015-01-20T12:45:18.401
+```
+
+Create just a date with no time
+
+```java
+LocalDate date1 = LocalDate.of(2015, Month.JANUARY, 20); // uses Enum for Month
+LocalDate date2 = LocalDate.of(2015, 1, 20);
+```
+
+Create only time with no date
+
+```java
+LocalTime time1 = LocalTime.of(6, 15); // hour and minute
+LocalTime time2 = LocalTime.of(6, 15, 30); // + seconds
+LocalTime time3 = LocalTime.of(6, 15, 30, 200); // + nanoseconds
+```
+
+Combining Date and Time
+
+public static LocalDateTime of(LocalDate date, LocalTime)
+public static LocalDateTime of(int year, int|Month month, int dayOfMonth, int hour, int minute)
+
+```java
+LocalDateTime dateTime1 = LocalDateTime.of(2015, Month.JANUARY, 20, 6, 15, 30);
+LocalDateTime dateTime2 = LocalDateTime.of(date1, time1);
+```
+
+Errors to be aware of
+
+```java
+LocalDate d = new LocalDate(); // DOES NOT COMPILE
+LocalDate.of(2015, Month.JANUARY, 32) // throws DateTimeException
+```
+
 ## Manipulating Dates and Times
+
+The date and time classes are immutable
+Adding to a date is easy
+
+```java
+LocalDate date = LocalDate.of(2014, Month.JANUARY, 20);
+System.out.println(date); // 2014-01-20
+date = date.plusDays(2);
+System.out.println(date); // 2014-01-22
+date = date.plusWeeks(1);
+System.out.println(date); // 2014-01-29
+date = date.plusMonths(1);
+System.out.println(date); // 2014-02-28
+date = date.plusYears(5);
+System.out.println(date); // 2019-02-28
+```
+
+easy methods to go backward in time
+
+```java
+LocalDate date = LocalDate.of(2020, Month.JANUARY, 20);
+LocalTime time = LocalTime.of(5, 15);
+LocalDateTime dateTime = LocalDateTime.of(date, time);
+System.out.println(dateTime); // 2020-01-20T05:15
+dateTime = dateTime.minusDays(1);
+System.out.println(dateTime); // 2020-01-19T05:15
+dateTime = dateTime.minusHours(10);
+System.out.println(dateTime); // 2020-01-18T19:15
+dateTime = dateTime.minusSeconds(30);
+System.out.println(dateTime); // 2020-01-18T19:14:30
+
+//It is common for date and time methods to be chained
+
+LocalDate date = LocalDate.of(2020, Month.JANUARY, 20);
+LocalTime time = LocalTime.of(5, 15);
+LocalDateTime dateTime = LocalDateTime.of(date2, time).minusDays(1).minusHours(10).minusSeconds(30);
+```
 
 ## Working with Periods
 
+```java
+Period annually = Period.ofYears(1); // every 1 year
+Period quarterly = Period.ofMonths(3); // every 3 months
+Period everyThreeWeeks = Period.ofWeeks(3); // every 3 weeks
+Period everyOtherDay = Period.ofDays(2); // every 2 days
+Period everyYearAndAWeek = Period.of(1, 0, 7); // every year and 7 days
+```
+
+You cannot chain methods when creating a Period
+Only the last method is used because the Period.ofXXX methods are static methods.
+
+```java
+Period wrong = Period.ofYears(1).ofWeeks(1); // every week
+
+//equivalent to below
+Period wrong = Period.ofYears(1);
+wrong = Period.ofWeeks(7); //changing to period to every week
+```
+
+Periods cannot be used with LocalTime
+
+```java
+LocalDate date = LocalDate.of(2015, 1, 20);
+LocalTime time = LocalTime.of(6, 15);
+LocalDateTime dateTime = LocalDateTime.of(date, time);
+Period period = Period.ofMonths(1);
+System.out.println(date.plus(period)); // 2015-02-20
+System.out.println(dateTime.plus(period)); // 2015-02-20T06:15
+System.out.println(time.plus(period)); // UnsupportedTemporalTypeException
+```
+
 ## Formatting Dates and Times
+
+The date and time classes support many methods to get data out of them:
+
+```java
+LocalDate date = LocalDate.of(2020, Month.JANUARY, 20);
+System.out.println(date.getDayOfWeek()); // MONDAY
+System.out.println(date.getMonth()); // JANUARY
+System.out.println(date.getYear()); // 2020
+System.out.println(date.getDayOfYear()); // 20
+```
+
+`DateTimeFormatter` class can be used to format any type of date and/or time object.
+It changes the format of the date to your liking.
+
+```java
+LocalDate date = LocalDate.of(2020, Month.JANUARY, 20);
+LocalTime time = LocalTime.of(11, 12, 34);
+LocalDateTime dateTime = LocalDateTime.of(date, time);
+
+System.out.println(date.format(DateTimeFormatter.ISO_LOCAL_DATE)); // 2020-01-20
+System.out.println(time.format(DateTimeFormatter.ISO_LOCAL_TIME)); // 11:12:34
+System.out.println(dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)); // 2020-01-20T11:12:34
+
+DateTimeFormatter shortDateTime = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+System.out.println(shortDateTime.format(dateTime)); // 1/20/20
+System.out.println(shortDateTime.format(date)); // 1/20/20
+System.out.println( shortDateTime.format(time)); // UnsupportedTemporalTypeException -  time cannot be formatted as a date
+
+ // Equivalent to below || Can be interchangeable
+
+System.out.println(dateTime.format(shortDateTime)); // 1/20/20
+System.out.println(date.format(shortDateTime)); // 1/20/20
+System.out.println(time.format(shortDateTime)); // UnsupportedTemporalTypeException -  time cannot be formatted as a date
+```
+
+ISO is a standard for dates.
+![alt text](image-1.png)
+
+There are two predefi ned formats that can show up on the exam: `SHORT` and `MEDIUM`
+
+```java
+LocalDate date = LocalDate.of(2020, Month.JANUARY, 20);
+LocalTime time = LocalTime.of(11, 12, 34);
+LocalDateTime dateTime = LocalDateTime.of(date, time);
+
+DateTimeFormatter shortF = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+DateTimeFormatter mediumF = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+
+System.out.println(shortF.format(dateTime)); // 1/20/20 11:12 AM
+System.out.println(mediumF.format(dateTime)); // Jan 20, 2020 11:12:34 AM
+```
+
+You can use predefined formats of your choosing
+
+```java
+DateTimeFormatter f = DateTimeFormatter.ofPattern("MMMM dd, yyyy, hh:mm");
+System.out.println(dateTime.format(f)); // January 20, 2020, 11:12
+```
+
+MMMM - M outputs 1, MM outputs 01, MMM outputs Jan, and MMMM outputs January
+dd - represnts date of the month
+, - if you want to output a comma
+: - if you want to output a colon
+yyyy - yy outputs a two-digit year and yyyy outputs a four-digit year
+hh - Use hh to include the leading zero if you’re outputting a singledigit hour.
+mm - m represents the minute.
 
 ## Parsing Dates and Times
 
+```java
+DateTimeFormatter f = DateTimeFormatter.ofPattern("MM dd yyyy");
+LocalDate date = LocalDate.parse("01 02 2015", f);
+LocalTime time = LocalTime.parse("11:22");
+System.out.println(date); // 2015-01-02
+System.out.println(time); // 11:22
+```
+
+Parsing is consistent in that if anything goes wrong, Java throws a runtime exception.
+That could be a format that doesn’t match the String to be parsed or an invalid date.
+
 # Summary
+
+In this chapter, you learned that Strings are immutable sequences of characters.
+The new operator is optional.
+The concatenation operator (+) creates a new String with the content of the first String followed by the content of the second String.
+If either operand involved in the + expression is a String, concatenation is used; otherwise, addition is used.
+
+String literals are stored in the string pool.
+The String class has many methods.
+You need to know charAt(), concat(), endsWith(), equals(), equalsIgnoreCase(), indexOf(),
+length(), replace(), startsWith(), substring(), toLowerCase(), toUpperCase(), and trim().
+
+StringBuilders are mutable sequences of characters.
+Most of the methods return a reference to the current object to allow method chaining.
+The StringBuilder class has many methods.
+You need to know append(), charAt(), delete(), deleteCharAt(),
+indexOf(), insert(), length(), reverse(), substring(), and toString().
+
+StringBuffer is the same as StringBuilder except that it is thread safe.
+
+Calling == on String objects will check whether they point to the same object in the pool.
+Calling == on StringBuilder references will check whether they are pointing to the same StringBuilder object.
+
+Calling equals() on String objects will check whether the sequence of characters is the same.
+Calling equals() on StringBuilder objects will check whether they are pointing to the same object rather than looking at the values inside.
+
+An array is a fixed-size area of memory on the heap that has space for primitives or pointers to objects. You specify the size when creating it—for example, int[] a = new int[6];.
+Indexes begin with 0 and elements are referred to using a[0].
+The Arrays.sort() method sorts an array.
+Arrays.binarySearch() searches a sorted array and returns the index of a match. If no match is found, it negates the position where the element would need to be inserted and subtracts 1.
+
+Methods that are passed varargs (…) can be used as
+if a normal array was passed in. In a multidimensional array, the second-level arrays and
+beyond can be different sizes.
+
+An ArrayList can change size over its life. It can be stored in an ArrayList or List
+reference. Generics can specify the type that goes in the ArrayList.
+You need to know the
+methods add(), clear(), contains(), equals(), isEmpty(), remove(), set(), and size().
+Although an ArrayList is not allowed to contain primitives,
+Java will autobox parameters passed in to the proper wrapper type.
+Collections.sort() sorts an ArrayList.
+
+A LocalDate contains just a date, a LocalTime contains just a time, and a LocalDateTime
+contains both a date and time. All three have private constructors and are created using
+LocalDate.now() or LocalDate.of() (or the equivalents for that class).
+Dates and times can be manipulated using plusXXX or minusXXX methods.
+The Period class represents a number of days, months, or years to add or subtract from a LocalDate or LocalDateTime.
+DateTimeFormatter is used to output dates and times in the desired format.
+The date and time classes are all immutable, which means the return value must be used.
 
 # Review Question Results
 
-182/198
+191/198
