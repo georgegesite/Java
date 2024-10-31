@@ -239,7 +239,7 @@ deleteCharAt(int index)
 reverse()
 toString()
 
-## StringBuilder vs. StringBUffer
+## StringBuilder vs. StringBuffer
 
 When writing new code that concatenates a lot of String objects together, you should use StringBuilder.
 
