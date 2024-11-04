@@ -44,6 +44,26 @@ The `string pool`, also known as the intern pool, is a location in the Java virt
 ```java
 String name = "Fluffy"; //it is a literal, so it goes into the string pool
 String name = new String("Fluffy"); // creates new object string, doesnt go into the string pool
+
+// Example 1: String Literals
+String s1 = "Java";  // "Java" is added to the String Pool
+String s2 = "Java";  // Reuses the reference from the String Pool
+System.out.println("s1 == s2: " + (s1 == s2));  // true, both refer to the same object in the String Pool
+
+// Example 2: Using `new String()` and `.intern()`
+String s3 = new String("Hello");  // Creates a new String object on the heap
+String s4 = s3.intern();          // Adds "Hello" to the String Pool (if not already present)
+String s5 = "Hello";
+System.out.println("s4 == s5: " + (s4 == s5));  // true, both refer to the String Pool object
+
+// Example 3: Concatenated Literals
+String s6 = "Ja" + "va";  // "Java" is created at compile time and added to the String Pool
+System.out.println("s1 == s6: " + (s1 == s6));  // true, both refer to the same String Pool object
+
+// Example 4: String Constants
+final String s7 = "HelloWorld";  // Added to the String Pool as a constant
+String s8 = "HelloWorld";
+System.out.println("s7 == s8: " + (s7 == s8));  // true, both are in the String Pool
 ```
 
 ## Important String Methods
@@ -140,6 +160,7 @@ System.out.println("abc".trim()); // abc
 System.out.println("\t a b c\n".trim()); // a b c
 ```
 
+```java
 length()
 charAt(int index)
 indexOf(char ch || String s)
@@ -153,7 +174,7 @@ endsWith(String suffix) returns boolean
 contains(String s) returns boolean
 replace(char ch, char newCh || String s, String newS) return String
 trim() return String
-
+```
 ## Method Chaining
 
 It is common to call multiple methods on the same String
