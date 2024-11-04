@@ -175,6 +175,7 @@ contains(String s) returns boolean
 replace(char ch, char newCh || String s, String newS) return String
 trim() return String
 ```
+
 ## Method Chaining
 
 It is common to call multiple methods on the same String
@@ -308,6 +309,7 @@ System.out.println(t1.equals(t2)); // false - false since Tiger does not impleme
 - `String.equals()` checks content equality.
 - `StringBuilder.equals()` behaves like `==` and checks reference equality (it does not compare content).
 - To compare content between a `String` and a `StringBuilder`, use `StringBuilder.toString()` to convert `StringBuilder` to a `String`.
+- Java does not allow you to compare String and StringBuilder using `==`
 
 ```java
 public class EqualityExample {
@@ -994,4 +996,38 @@ The date and time classes are all immutable, which means the return value must b
 
 # Review Question Results
 
-191/198
+/1. G
+/2. A , C, D
+O3. B , C | B, C, E
+/4. B
+O5. E | F
+/6. B
+O7. E | B, D, E
+/8. A, E , D
+/9. C
+O10. C | F
+/11. E
+O12. B | A
+/13. F
+/14. A , C
+O15. C, E | C, E, F
+O16.B, F | C
+O17.B, D | F
+O18. A, F, C| A, C, D, E
+/19. B, C
+/20. D
+/21. C
+/22. D
+/23. A
+/24. C
+/25. D
+O26. C | A, B, D
+/27. B
+/28. D, F
+O29. E | D
+O30. E | F
+O31. F | B
+/32. E
+/33. B
+
+20/33
