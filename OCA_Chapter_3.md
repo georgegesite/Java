@@ -304,6 +304,49 @@ System.out.println(t1 == t2); // false -  false because the two object reference
 System.out.println(t1.equals(t2)); // false - false since Tiger does not implement equals()
 ```
 
+- `==` checks reference equality for both String and StringBuilder.
+- `String.equals()` checks content equality.
+- `StringBuilder.equals()` behaves like `==` and checks reference equality (it does not compare content).
+- To compare content between a `String` and a `StringBuilder`, use `StringBuilder.toString()` to convert `StringBuilder` to a `String`.
+
+```java
+public class EqualityExample {
+    public static void main(String[] args) {
+        // Example 1: String equality with == and .equals()
+        String s1 = "Hello";
+        String s2 = "Hello";
+        String s3 = new String("Hello");
+
+        // Using ==
+        System.out.println("s1 == s2: " + (s1 == s2));           // true, both refer to the same object in the String Pool
+        System.out.println("s1 == s3: " + (s1 == s3));           // false, s3 is a new String object in heap memory
+
+        // Using .equals()
+        System.out.println("s1.equals(s2): " + s1.equals(s2));   // true, content is the same
+        System.out.println("s1.equals(s3): " + s1.equals(s3));   // true, content is the same
+
+
+        // Example 2: StringBuilder equality with == and .equals()
+        StringBuilder sb1 = new StringBuilder("Hello");
+        StringBuilder sb2 = new StringBuilder("Hello");
+
+        // Using ==
+        System.out.println("sb1 == sb2: " + (sb1 == sb2));       // false, different StringBuilder objects in memory
+
+        // Using .equals()
+        System.out.println("sb1.equals(sb2): " + sb1.equals(sb2)); // false, .equals() is not overridden in StringBuilder, so it behaves like ==
+
+
+        // Example 3: Comparing String with StringBuilder using .toString()
+        String s4 = "Hello";
+        StringBuilder sb3 = new StringBuilder("Hello");
+
+        // Convert StringBuilder to String for content comparison
+        System.out.println("s4.equals(sb3.toString()): " + s4.equals(sb3.toString()));  // true, comparing content after conversion
+    }
+}
+```
+
 # Understanding Java Arrays
 
 An `array` is an area of memory on the heap with space for a designated number of elements
