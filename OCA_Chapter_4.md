@@ -785,6 +785,7 @@ public class Rabbit {
 ```
 
 Remember that a default constructor is only supplied if there are no constructors present.
+
 ```java
 class Rabbit1 { //gets a default no-argument constructor
 }
@@ -808,9 +809,11 @@ Rabbit3 r3 = new Rabbit3(true); // calls the user-defined constructor
 Rabbit4 r4 = new Rabbit4(); // DOES NOT COMPILE
 } }
 ```
+
 ## Overloading Constructors
 
 Constructs can be overloaded to provide different ways of creating objects.
+
 ```java
 public class Hamster {
  private String color;
@@ -827,6 +830,7 @@ public class Hamster {
 ```
 
 Using `this()` for Constructor Chaining
+
 ```java
 public class Hamster {
     private int weight;
@@ -853,14 +857,17 @@ public Hamster(int weight) {
 }
 
 ```
+
 Important Rules for `this()`
 `this()` must be the first statement in a constructor. You can’t have any code before it.
 You can only call one other constructor with `this()`, so constructor chaining is limited to one level at a time.
 
 ## Final Fields
+
 The constructor is part of the initialization process, so it is allowed to assign final
-instance variables in it. By the time the constructor completes, all final instance variables 
+instance variables in it. By the time the constructor completes, all final instance variables
 must have been set
+
 ```java
 public class MouseHouse {
  private final int volume;
@@ -869,7 +876,9 @@ public class MouseHouse {
  volume = length * width * height;
  }}
 ```
+
 #### Rules for Final Instance Variables
+
 1. **Must be assigned exactly once**: A `final` instance variable must be initialized once and only once.
 2. **Can be assigned in three places**:
    - **At the declaration**: Directly assign a value when declaring the variable.
@@ -891,21 +900,185 @@ public class ExampleClass {
     }
 }
 ```
+
 ## Order of Initialization
-248/263
+
+1. If there is a superclass, initialize it first
+2. Static variable declarations and static initializers in the order they appear in the file. followed by main method
+3. Instance variable declarations and instance initializers in the order they appear in the file.
+4. The constructor.
+
+```java
+public class YetMoreInitializationOrder {
+static { add(2); }
+static void add(int num) { System.out.print(num + " "); }
+ YetMoreInitializationOrder() { add(5); }
+static { add(4); }
+{ add(6); }
+ static { new YetMoreInitializationOrder(); }
+{ add(8); }
+ public static void main(String[] args) { } }
+
+// Outputs:  2 4 6 8 5
+```
+
 # Encapsulating Data
+
+`Encapsulation means` we set up the class so only methodsin the class with the variables can refer to the instance variables.
+
+```java
+public class Swan {
+private int numberEggs; // private
+public int getNumberEggs() { // getter
+return numberEggs;
+}
+public void setNumberEggs(int numberEggs) { // setter
+if (numberEggs >= 0) // guard condition
+this.numberEggs = numberEggs;
+ } }
+```
+
+For encapsulation, remember that data (an instance variable) is private and getters/setters
+are public.
+![alt text](image-7.png)
 
 ## Creating Immutable Classes
 
+One step in making a class immutable is to omit the setters.
+
+```java
+public class ImmutableSwan {
+ private int numberEggs;
+ public ImmutableSwan(int numberEggs) {
+ this.numberEggs = numberEggs;
+ }
+ public int getNumberEggs() {
+ return numberEggs;
+ } }
+```
+
+immutable is only measured after the object is constructed
+Immutable classes are allowed to have values. They just can't change after instantiation.
+encapsulation refers to preventing callers from changing the instance variables
+directly. Immutability refers to preventing callers from changing the instance variables at all.
+
 # Writing Simple Lambdas
+
+`Functional programming` is a way of writing code more declaratively.You specify what you want to do rather
+than dealing with the state of objects.
+a `lambda expression` is like a method that you can pass as if it were a variable.
 
 ## Lambda Example
 
+`Deferred execution` means that code is specifi ed now but will run later.
+
 ## Lambda Syntax
+
+```java
+a -> a.canHop()
+(Animal a) -> { return a.canHop(); }
+```
+
+![alt text](image-8.png)
+![alt text](image-9.png)
+
+The parentheses can only be omitted if there is a single parameter and its type is not
+explicitly stated.
+we can omit braces when we only have a single statement.
+
+```java
+// Valid Lambdas
+print(() -> true); // 0 parameters
+print(a -> a.startsWith("test")); // 1 parameter
+print((String a) -> a.startsWith("test")); // 1 parameter
+print((a, b) -> a.startsWith("test")); // 2 parameters
+print((String a, String b) -> a.startsWith("test")); // 2 parameters
+```
+
+```java
+// Invalid Lambdas
+print(a, b -> a.startsWith("test")); // DOES NOT COMPILE -  needs parentheses around the parameter list
+print(a -> { a.startsWith("test"); }); // DOES NOT COMPILE -  missing the return keyword
+print(a -> { return a.startsWith("test") }); // DOES NOT COMPILE - missing the semicolon
+(a, b) -> { int a = 0; return 5;} // DOES NOT COMPILE - not allowed to redeclare parameter
+
+```
 
 ## Predicates
 
+Lambdas work with interfaces that have only one method.
+These are called functional interfaces—interfaces that can be used with functional programming.
+
+```java
+public interface Predicate<T> {
+ boolean test(T t);
+}
+```
+
+ArrayList declares a `removeIf()` method that takes a Predicate
+
+```java
+ List<String> bunnies = new ArrayList<>();
+ bunnies.add("long ear");
+ bunnies.add("floppy");
+ bunnies.add("hoppy");
+ System.out.println(bunnies); // [long ear, floppy, hoppy]
+ bunnies.removeIf(s -> s.charAt(0) != 'h');
+ System.out.println(bunnies); // [hoppy]
+```
+
 # Summary
+
+As you learned in this chapter, Java methods start with an access modifier of `public`,
+`private`, `protected` or `blank (default access)`. This is followed by an optional specifier such
+as `static`, `final`, or `abstract`. Next comes the return type, which is `void` or a `Java type`.
+The method name follows, using standard Java identifier rules. Zero or more parameters go
+in parentheses as the parameter list. Next come any optional exception types. Finally, zero
+or more statements go in braces to make up the method body.
+
+Using the `private` keyword means the code is only available from within the same class.
+`Default (package private)` access means the code is only available from within the same
+package. Using the `protected` keyword means the code is available from the same package
+or subclasses. Using the `public` keyword means the code is available from anywhere. Static
+methods and static variables are shared by the class. When referenced from outside the
+class, they are called using the classname—for example, `StaticClass.method()`.
+
+Instance members are allowed to call static members, but static members are not allowed to call
+instance members. Static imports are used to import static members.
+Java uses pass-by-value, which means that calls to methods create a copy of the parameters.
+Assigning new values to those parameters in the method doesn’t affect the caller’s variables.
+Calling methods on objects that are method parameters changes the state of those objects and
+is reflected in the caller.
+
+Overloaded methods are methods with the `same name but a different parameter list`.
+Java calls the most specifi c method it can find. Exact matches are preferred, followed by
+wider primitives. After that comes autoboxing and finally varargs.
+
+Constructors are used to instantiate new objects. The default no-argument constructor
+is called when no constructor is coded. Multiple constructors are allowed and can call each
+other by writing this(). If this() is present, it must be the first statement in the constructor.
+Constructors can refer to instance variables by writing this before a variable name to indicate they want the instance variable and not the method parameter with that name.
+
+The order of initialization is the
+
+- superclass (which we will cover in Chapter 5);
+- static variables and static initializers in the order they appear;
+- instance variables and instance initializers in the order they appear;
+- and finally the constructor.
+
+`Encapsulation` refers to preventing callers from changing the instance variables directly.
+This is done by making instance variables private and getters/setters public. Immutability
+refers to preventing callers from changing the instance variables at all. This uses several
+techniques, including removing setters. JavaBeans use methods beginning with `is` and `get`
+for boolean and non-boolean property types, respectively. Methods beginning with `set` are
+used for setters.
+
+Lambda expressions, or lambdas, allow passing around blocks of code. The full syntax
+looks like `(String a, String b) -> { return a.equals(b); }`. The parameter types can
+be omitted. When only one parameter is specified without a type, the parentheses can also
+be omitted. The braces and return statement can be omitted for a single statement, making
+the short form (a -> a.equals(b). Lambdas are passed to a method expecting an interface with one method. Predicate is a common interface. It has one method named test that returns a boolean and takes any type. The removeIf() method on ArrayList takes a
+Predicate.
 
 # Exam Essentials
 
