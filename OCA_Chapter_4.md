@@ -784,14 +784,115 @@ public class Rabbit {
 }
 ```
 
-244/263
+Remember that a default constructor is only supplied if there are no constructors present.
+```java
+class Rabbit1 { //gets a default no-argument constructor
+}
+class Rabbit2 {
+ public Rabbit2() { }
+}
+class Rabbit3 {
+ public Rabbit3(boolean b) { }
+}
+class Rabbit4 {
+ private Rabbit4() { }
+}
+```
 
+```java
+public class RabbitsMultiply {
+public static void main(String[] args) {
+Rabbit1 r1 = new Rabbit1(); // calls the generated default no-argument constructor
+Rabbit2 r2 = new Rabbit2(); // calls the user-defined constructor
+Rabbit3 r3 = new Rabbit3(true); // calls the user-defined constructor
+Rabbit4 r4 = new Rabbit4(); // DOES NOT COMPILE
+} }
+```
 ## Overloading Constructors
 
+Constructs can be overloaded to provide different ways of creating objects.
+```java
+public class Hamster {
+ private String color;
+ private int weight;
+ public Hamster(int weight) { // first constructor
+ this.weight = weight;
+ color = "brown";
+ }
+ public Hamster(int weight, String color) { // second constructor
+ this.weight = weight;
+ this.color = color;
+ }
+}
+```
+
+Using `this()` for Constructor Chaining
+```java
+public class Hamster {
+    private int weight;
+    private String color;
+
+    // Constructor with two parameters
+    public Hamster(int weight, String color) {
+        this.weight = weight;
+        this.color = color;
+    }
+//Direct Constructor Calls Don’t Work
+public Hamster(int weight) {
+    Hamster(weight, "brown"); // DOES NOT COMPILE
+}
+
+
+public Hamster(int weight) {
+    new Hamster(weight, "brown"); // Compiles but does not do what we want
+}
+    // Constructor with one parameter, chaining to the two-parameter constructor
+    public Hamster(int weight) {
+        this(weight, "brown"); // Calls the constructor with two parameters
+    }
+}
+
+```
+Important Rules for `this()`
+`this()` must be the first statement in a constructor. You can’t have any code before it.
+You can only call one other constructor with `this()`, so constructor chaining is limited to one level at a time.
+
 ## Final Fields
+The constructor is part of the initialization process, so it is allowed to assign final
+instance variables in it. By the time the constructor completes, all final instance variables 
+must have been set
+```java
+public class MouseHouse {
+ private final int volume;
+ private final String name = "The Mouse House";
+ public MouseHouse(int length, int width, int height) {
+ volume = length * width * height;
+ }}
+```
+#### Rules for Final Instance Variables
+1. **Must be assigned exactly once**: A `final` instance variable must be initialized once and only once.
+2. **Can be assigned in three places**:
+   - **At the declaration**: Directly assign a value when declaring the variable.
+   - **In an instance initializer**: Use an initializer block to set the variable's value before any constructor is called.
+   - **In the constructor**: Assign a value in the constructor, ensuring it’s done by the end of the constructor execution.
 
+```java
+public class ExampleClass {
+    private final int constantValue = 42; // Assigned at declaration
+    private final int computedValue;      // Assigned in the constructor
+
+    // Instance initializer block
+    {
+        // This can be used to assign final variables
+    }
+
+    public ExampleClass(int value) {
+        computedValue = value * 2; // Assigned in the constructor
+    }
+}
+```
 ## Order of Initialization
-
+248/263
 # Encapsulating Data
 
 ## Creating Immutable Classes
