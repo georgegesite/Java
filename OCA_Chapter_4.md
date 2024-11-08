@@ -926,6 +926,10 @@ static { add(4); }
 
 `Encapsulation means` we set up the class so only methodsin the class with the variables can refer to the instance variables.
 
+- Encapsulation uses private instance variables.
+- Encapsulation allows setters.
+- Immutability uses private instance variables.
+
 ```java
 public class Swan {
 private int numberEggs; // private
@@ -1077,7 +1081,7 @@ Lambda expressions, or lambdas, allow passing around blocks of code. The full sy
 looks like `(String a, String b) -> { return a.equals(b); }`. The parameter types can
 be omitted. When only one parameter is specified without a type, the parentheses can also
 be omitted. The braces and return statement can be omitted for a single statement, making
-the short form (a -> a.equals(b). Lambdas are passed to a method expecting an interface with one method. Predicate is a common interface. It has one method named test that returns a boolean and takes any type. The removeIf() method on ArrayList takes a
+the short form (a -> a.equals(b)). Lambdas are passed to a method expecting an interface with one method. Predicate is a common interface. It has one method named test that returns a boolean and takes any type. The removeIf() method on ArrayList takes a
 Predicate.
 
 # Exam Essentials
@@ -1091,3 +1095,35 @@ Predicate.
 - Write simple lambda expressions.
 
 # Review Questions Result
+
+/1. B, C
+/2. A, D
+/3. A, C, D
+/4. A, B, G
+/5. D, G
+/6. D
+O7. B, D, F | B, C, D F
+O8. B,C | B, C, E
+O9. A, E | C, E
+O10. C | B
+/11. B, E
+O12. E | D
+O13. D | E
+O14. E | B
+/15. E
+O16. E | B
+/17. B, D, E
+O18. C, D | C, G
+O19. A, D | A, G
+/20. E
+O21. A, C | C
+O22. B | E
+/23. A
+O24. C, E | B, C, E
+O25. A, F | A, E
+/26. A
+/27. C
+/28. A, D, F
+/29. A, F
+
+15/29
