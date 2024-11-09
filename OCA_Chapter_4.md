@@ -354,6 +354,7 @@ Remember that a member is a method or field.
 
 Static methods don't require an object to be created/ an instance of the class.
 They are shared among all users of the class.
+Java allows calling a static method through an instance variable
 
 ```java
 public class Koala {
@@ -412,6 +413,7 @@ public class Static {
 
 - A static method or instance method can call a static
   method because static methods don’t require an object to use.
+- static methods are not allowed to call instance methods.
 - Only an instance method can
   call another instance method on the same class without using a reference variable, because
   instance methods do require an object.
@@ -454,7 +456,8 @@ public class Counter {
 
 ## Static Variables
 
-Some static variables are meant to change as the program runs
+Some static variables are meant to change as the program runs.instance and static initializers are able to access static variables.
+static initializer does not have access to instance variables.
 
 ```java
 public class Initializers {
@@ -904,7 +907,7 @@ public class ExampleClass {
 ## Order of Initialization
 
 1. If there is a superclass, initialize it first
-2. Static variable declarations and static initializers in the order they appear in the file. followed by main method
+2. Static variable declarations and static initializers(static initialization is only run once) in the order they appear in the file. followed by main method
 3. Instance variable declarations and instance initializers in the order they appear in the file.
 4. The constructor.
 
