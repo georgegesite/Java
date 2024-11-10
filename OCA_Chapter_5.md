@@ -550,15 +550,200 @@ public class Mouse extends Rodent {
 
 # Creating Abstract Classes
 
-305/334
+An `abstract class` is a class that is marked with the abstract keyword and cannot be instantiated.
+An `abstract method` is a method marked with the abstract keyword defined in an abstract class, for which no implementation is provided in the class in which it is declared.
+
+```java
+public abstract class Animal {
+ protected int age;
+ public void eat() {
+ System.out.println("Animal is eating");
+ }
+ public abstract String getName(); // abstract method - no brackets, end with semicolon
+}
+public class Swan extends Animal {
+ public String getName() { // abstract method overidden
+ return "Swan";
+ }
+}
+```
 
 ## Defining an Abstract Class
 
+An abstract class is `not required to include any abstract methods`.
+
+```java
+public abstract class Cow {
+}
+```
+
+An abstract class doesn’t have to implement any abstract methods, an abstract method may only be defined in an abstract class.
+
+```java
+public class Chicken {
+ public abstract void peck(); // DOES NOT COMPILE - not an abstract class
+}
+```
+
+```java
+public abstract class Turtle {
+ public abstract void swim() {} // DOES NOT COMPILE - two brackets are provided instead of a semicolon
+ public abstract int getAge() { // DOES NOT COMPILE - provides a body to an abstract method
+ return 10;
+ }
+}
+```
+
+- an `abstract class cannot be marked as final` for a somewhat obvious reason.
+- an abstract class is one that must be extended by another class to
+  be instantiated.
+- a final class can’t be extended by another class.
+- an abstract method may not be marked as final for the same reason that
+  an abstract class may not be marked as final.
+- a method may not be marked as both abstract and private
+
+```java
+public final abstract class Tortoise { // DOES NOT COMPILE
+}
+
+// an abstract method may not be marked as final for the same reason that an abstract class may not be marked as final.
+public abstract class Goat {
+ public abstract final void chew(); // DOES NOT COMPILE
+}
+
+// a method may not be marked as both abstract and private
+public abstract class Whale {
+ private abstract void sing(); // DOES NOT COMPILE
+}
+public class HumpbackWhale extends Whale {
+ private void sing() {
+ System.out.println("Humpback whale is singing");
+ }
+}
+```
+
+```java
+public abstract class Whale {
+ protected abstract void sing();
+}
+public class HumpbackWhale extends Whale {
+ private void sing() { // DOES NOT COMPILE - the subclass cannot reduce the visibility of the parent method
+ System.out.println("Humpback whale is singing");
+ }
+}
+```
+
 ## Creating a Concrete Class
+
+Abstract classes cannot be instantiated and therefore do not do much other than define static variables and methods.
+
+```java
+public abstract class Eel {
+ public static void main(String[] args) {
+ final Eel eel = new Eel(); // DOES NOT COMPILE
+ }
+}
+```
+
+An abstract class becomes useful when it is extended by a concrete subclass. A `concrete class` is the first nonabstract subclass that extends an abstract class and is required to implement all inherited abstract methods.
+
+```java
+public abstract class Animal {
+ public abstract String getName();
+}
+public class Walrus extends Animal { // DOES NOT COMPILE - did not implement abstract methods
+}
+```
+
+The key point is that the fi rst class to extend the nonabstract class must implement all
+inherited abstract methods.
+
+```java
+public abstract class Animal {
+ public abstract String getName();
+}
+public class Bird extends Animal { // DOES NOT COMPILE - concrete class must implement all abstract methods
+}
+public class Flamingo extends Bird {
+ public String getName() {
+ return "Flamingo";
+ }
+}
+```
 
 ## Extending an Abstract Clas
 
+- abstract classes can extend other abstract classes and are
+  not required to provide implementations for any of the abstract methods.
+- a concrete class that extends an abstract class must implement all inherited abstract
+  methods.
+
+```java
+public abstract class Animal {
+ public abstract String getName();
+}
+public abstract class BigCat extends Animal {
+ public abstract void roar();
+}
+public class Lion extends BigCat { // concrete class
+ public String getName() { // implements abstract method from abstract class Animal
+ return "Lion";
+ }
+ public void roar() {// implements abstract method from abstract class BigCat
+ System.out.println("The Lion lets out a loud ROAR!");
+ }
+}
+```
+
+a concrete
+subclass is not required to provide an implementation for an abstract method if an intermediate abstract class provides the implementation.
+
+```java
+public abstract class Animal {
+ public abstract String getName();
+}
+public abstract class BigCat extends Animal {
+ public String getName() {
+    return "BigCat";
+ }
+ public abstract void roar();
+}
+public class Lion extends BigCat {
+ public void roar() {
+ System.out.println("The Lion lets out a loud ROAR!");
+ }
+}
+```
+
+if an intermediate class provides an implementation
+for an abstract method, that method is inherited by subclasses as a concrete method, not
+as an abstract one. In other words, the subclasses do not consider it an inherited abstract
+method because it is no longer abstract by the time it reaches the subclasses.
+
+### Abstract Class Definition Rules:
+
+1. Abstract classes cannot be instantiated directly.
+2. Abstract classes may be defined with any number, including zero, of abstract and nonabstract methods.
+3. Abstract classes may not be marked as private or final.
+4. An abstract class that extends another abstract class inherits all of its abstract methods
+   as its own abstract methods.
+5. The first concrete class that extends an abstract class must provide an implementation
+   for all of the inherited abstract methods.
+
+### Abstract Method Definition Rules:
+
+1. Abstract methods may only be defined in abstract classes.
+2. Abstract methods may not be declared private or final.
+3. Abstract methods must not provide a method body/implementation in the abstract
+   class for which is it declared.
+4. Implementing an abstract method in a subclass follows the same rules for overriding a
+   method. For example, the name and signature must be the same, and the visibility of
+   the method in the subclass must be at least as accessible as the method in the parent
+   class.
+
 # Implementing Interfaces
+
+312/334
 
 ## Defining an Interface
 
