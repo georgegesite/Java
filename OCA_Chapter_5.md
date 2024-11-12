@@ -743,13 +743,116 @@ method because it is no longer abstract by the time it reaches the subclasses.
 
 # Implementing Interfaces
 
-312/334
+- Java allow classes to implement any
+  number of interfaces.
+- An `interface` is an abstract data type that defi nes a list of abstract
+  public methods that any class implementing the interface must provide.
+- A class invokes the interface by using the i`mplements keyword` in its class definition.
+  ![alt text](image-11.png)
+
+method access modifiers such as bstract and public , are assumed. In other words, whether or not you provide
+them, the compiler will automatically insert them as part of the method definition.
+
+```java
+public class Elephant implements WalksOnFourLegs, HasTrunk, Herbivore {
+}
+```
 
 ## Defining an Interface
 
+1.  Interfaces cannot be instantiated directly.
+2.  An interface is not required to have any methods.
+3.  An interface may not be marked as final.
+4.  All top-level interfaces are assumed to have public or default access, and they must
+    include the abstract modifier in their definition. Therefore, marking an interface as
+    ` private, protected, or final` will trigger a compiler error, since this is incompatible
+    with these assumptions.
+5.  All nondefault methods in an interface are assumed to have the modifiers abstract
+    and public in their definition. Therefore, marking a method as `private, protected, or final`
+    will trigger compiler errors as these are incompatible with the abstract and
+    public keywords.
+
+````java
+public interface WalksOnTwoLegs {} // compiles - interface are not required to define any methods.
+
+public class TestClass {
+  public static void main(String[] args) {
+    WalksOnTwoLegs example = new WalksOnTwoLegs();  // DOES NOT COMPILE -cannot instantiate an interface
+  }
+ }
+ public final interface WalksOnEightLegs {  // DOES NOT COMPILE - cannot be defined as final
+ }
+
+```java
+ public interface CanFly {
+  void fly(int speed);
+  abstract void takeoff();
+  public abstract double dive();
+ }
+
+ // both are equivalent
+ public abstract interface CanFly { //  abstract keyword is fi rst automatically added to the interface  defi nition
+  public abstract void fly(int speed); //  each method is prepended with abstract and public keywords.
+  public abstract void takeoff();
+  public abstract double dive();
+ }
+````
+
+```java
+ private final interface CanCrawl {  // DOES NOT COMPILE - interface cannot be private or final
+  private void dig(int depth);  // DOES NOT COMPILE -- interface methods cannot be private
+  protected abstract double depth();  // DOES NOT COMPILE -- interface methods cannot be protected
+  public final void surface();  // DOES NOT COMPILE -- interface methods cannot be final
+ }
+```
+
 ## Inheriting an Interface
 
+There are two inheritance rules you should keep in mind when extending an interface:
+
+1.  An interface that extends another interface, as well as an abstract class that
+    implements an interface, inherits all of the abstract methods as its own abstract
+    methods.
+2.  The first concrete class that implements an interface, or extends an abstract class
+    that implements an interface, must provide an implementation for all of the inherited
+    abstract methods.
+
+- an interface may be extended using the extend keyword. the new child interface inherits all the abstract methods of the parent interface
+- an interface may extend multiple interfaces
+
+```java
+ public interface HasTail {
+  public int getTailLength();
+ }
+ public interface HasWhiskers {
+  public int getNumberOfWhiskers();
+ }
+ public interface Seal extends HasTail, HasWhiskers {
+ }
+
+ // Any class that implements the Seal interface must provide 
+ // an implementation for all methods in the parent interfaces
+```
+
+- an abstract class can implement an interface. it is treated the same way as n interface extending another interface.
+- the abstract class inherits the abstract methods of the interface but is not required to implement them.
+- the first concrete class to extend the abstract  class must implement all the inherited abstract methods of the interface.
+
+```java
+public interface HasTail {
+  public int getTailLength();
+ }
+ public interface HasWhiskers {
+  public int getNumberOfWhiskers();
+ }
+ public abstract class HarborSeal implements HasTail, HasWhiskers { // compiles - it inherits abstract methods and no need to implement
+ }
+ public class LeopardSeal implements HasTail, HasWhiskers {  // DOES NOT COMPILE - it does not implement abstract method of the interface
+ }
+```
 ## Classes, Interfaces, and Keywords
+
+316/334
 
 ## Abstract Methods and Multiple Inheritance
 
