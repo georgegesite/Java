@@ -830,13 +830,13 @@ There are two inheritance rules you should keep in mind when extending an interf
  public interface Seal extends HasTail, HasWhiskers {
  }
 
- // Any class that implements the Seal interface must provide 
+ // Any class that implements the Seal interface must provide
  // an implementation for all methods in the parent interfaces
 ```
 
 - an abstract class can implement an interface. it is treated the same way as n interface extending another interface.
 - the abstract class inherits the abstract methods of the interface but is not required to implement them.
-- the first concrete class to extend the abstract  class must implement all the inherited abstract methods of the interface.
+- the first concrete class to extend the abstract class must implement all the inherited abstract methods of the interface.
 
 ```java
 public interface HasTail {
@@ -850,34 +850,516 @@ public interface HasTail {
  public class LeopardSeal implements HasTail, HasWhiskers {  // DOES NOT COMPILE - it does not implement abstract method of the interface
  }
 ```
+
 ## Classes, Interfaces, and Keywords
 
-316/334
+- a class can implement an interface
+- a class cannot extend an interface
+- an interface can extend another interface,
+- an interface cannot implement another interface.
+
+```java
+ public interface CanRun {}
+ public class Cheetah extends CanRun {}  // DOES NOT COMPILE - class cannot extend interface
+ public class Hyena {}
+ public interface HasFur extends Hyena {} // DOES NOT COMPILE - an interface cannot extend class
+
+ //class implements interface syntax
+```
 
 ## Abstract Methods and Multiple Inheritance
 
+a class that inherits from two interfaces that contain the same abstract method
+
+```java
+
+ public interface Herbivore {
+  public void eatPlants();
+ }
+ public interface Omnivore {
+  public void eatPlants();
+  public void eatMeat();
+ }
+ public class Bear implements Herbivore, Omnivore {
+  public void eatMeat() {
+    System.out.println("Eating meat");
+  }
+  public void eatPlants() {
+    System.out.println("Eating plants");
+  }
+ }
+```
+
+If two abstract interface methods have identical behaviors—or in this case the same method signature— creating a class that implements one of the two methods automatically implements the second method.
+
+If the method name is the same but the input parameters are different, there is no confl ict because this is considered a method overload.
+
+```java
+ public interface Herbivore {
+  public int eatPlants(int quantity);
+ }
+
+public interface Omnivore {
+  public void eatPlants();
+ }
+ public class Bear implements Herbivore, Omnivore {
+  public int eatPlants(int quantity) {
+    System.out.println("Eating plants: "+quantity);
+    return quantity;
+  }
+  public void eatPlants() {
+    System.out.println("Eating plants");
+  }
+ }
+```
+
+It is not possible in
+Java to define two methods in a class with the same name and input parameters but different return types.
+
+```java
+ public interface Herbivore {
+  public int eatPlants();
+ }
+ public interface Omnivore {
+  public void eatPlants();
+ }
+ public class Bear implements Herbivore, Omnivore {
+  public int eatPlants() {  // DOES NOT COMPILE
+    System.out.println("Eating plants: 10");
+    return 10;
+  }
+  public void eatPlants() {  // DOES NOT COMPILE
+    System.out.println("Eating plants");
+  }
+ }
+
+```
+
+The compiler would also throw an exception if you defi ne an interface or abstract class
+that inherits from two confl icting interfaces
+
+```java
+
+public interface Herbivore {
+  public int eatPlants();
+ }
+ public interface Omnivore {
+  public void eatPlants();
+ }
+ public interface Supervore extends Herbivore, Omnivore {} // DOES NOT COMPILE - conflicting  interface methods
+ public abstract class AbstractBear implements Herbivore, Omnivore {} // DOES NOT COMPILE - conflicting  interface methods
+```
+
 ## Interface Variables
+
+interface variables are also assumed to be `static and final`.
+Here are two interface variables rules:
+
+1.  Interface variables are assumed to be public, static, and final. Therefore, marking
+    a variable as private or protected will trigger a compiler error, as will marking any
+    variable as abstract.
+2.  The value of an interface variable must be set when it is declared since it is marked as
+    final
+
+```java
+ // compiler will automatically convert them both to the second example:
+ public interface CanSwim {
+  int MAXIMUM_DEPTH = 100;
+  final static boolean UNDERWATER = true;
+  public static final String TYPE = "Submersible";
+ }
+ public interface CanSwim {
+  public static final int MAXIMUM_DEPTH = 100;
+  public static final boolean UNDERWATER = true;
+  public static final String TYPE = "Submersible";
+ }
+```
+
+the compiler will automatically insert public static final to
+any constant interface variables it fi nds missing those modifi ers.
+
+```java
+public interface CanDig {
+  private int MAXIMUM_DEPTH = 100;  // DOES NOT COMPILE - interface variables cannot be private
+  protected abstract boolean UNDERWATER = false;  // DOES NOT COMPILE - cannot be protected and abstract
+  public static String TYPE;  // DOES NOT COMPILE - value is not declared - you must provide a value to a static final member of the class when it is defined
+ }
+```
 
 ## Default Interface Methods
 
+- A `default method` is a method defined within an
+  interface with the default keyword in which a method body is provided.
+- classes have the option to override the default method if they
+  need to, but they are not required to do so.
+- The purpose of adding default methods to the Java language was in part to help with
+  code development and backward compatibility.
+
+```java
+  public interface IsWarmBlooded {
+  boolean hasScales();
+  public default double getTemperature() {
+    return 10.0;
+  }
+ }
+```
+
+The following are the default interface method rules you need to be familiar with:
+
+1.  A default method may only be declared within an interface and not within a class or
+    abstract class.
+2.  A default method must be marked with the default keyword. If a method is marked as
+    default, it must provide a method body.
+3.  A default method is not assumed to be static, final, or abstract, as it may be used
+    or overridden by a class that implements the interface
+4.  Like all methods in an interface, a default method is assumed to be public and will not
+    compile if marked as private or protected
+
+```java
+public interface Carnivore {
+  public default void eatMeat();  // DOES NOT COMPILE - marked as default but doesn’t provide a method body
+  public int getRequiredFoodAmount() {  // DOES NOT COMPILE - provides a method body but isn't a default method
+    return 13;
+  }
+ }
+```
+
+When an interface extends another interface that contains a default method, it may
+choose to ignore the default method, in which case the default implementation for the
+method will be used. Alternatively, the interface may override the defi nition of the default
+method using the standard rules for method overriding, such as not limiting the acces
+sibility of the method and using covariant returns. Finally, the interface may redeclare the
+method as abstract, requiring classes that implement the new interface to explicitly provide
+a method body.
+
+```java
+public interface HasFins {
+  public default int getNumberOfFins() { // default method
+    return 4;
+  }
+  public default double getLongestFinLength() { // default method
+    return 20.0;
+  }
+  public default boolean doFinsHaveScales() { // default method
+    return true;
+  }
+ }
+public interface SharkFamily extends HasFins {
+  public default int getNumberOfFins() {
+    return 8;
+  }
+  public double getLongestFinLength();
+  public boolean doFinsHaveScales() {  // DOES NOT COMPILE - interface methods need default keyword if it has method body
+    return false;
+  }
+ }
+
+
+```
+
 ## Default Methods and Multiple Inheritance
+
+```java
+public interface Walk {
+  public default int getSpeed() {
+    return 5;
+  }
+ }
+ public interface Run {
+  public default int getSpeed() {
+    return 10;
+  }
+ }
+ public class Cat implements Walk, Run {  // DOES NOT COMPILE - it is not clear whether the code should output 5 or 10, outputs neither value—it fails to compile
+  public static void main(String[] args) {
+    System.out.println(new Cat().getSpeed());
+  }
+ }
+
+ // Error: class Cat inherits unrelated defaults for getSpeed() from types Walk and Run
+```
+
+If a class implements two interfaces that have default methods with the same name and
+signature, the compiler will throw an error.
+
+```java
+ public class Cat implements Walk, Run {
+  public int getSpeed() { // class overrides the duplicate method in Walk & Run
+    return 1;
+  }
+  public static void main(String[] args) {
+    System.out.println(new Cat().getSpeed());
+  }
+ }
+```
+
+You can see that having a class that implements or inherits two duplicate default methods
+forces the class to implement a new version of the method, or the code will not compile.
 
 ## Static Interface Methods
 
+A static method defined in an interface `is not inherited` in any classes that implement the interface.
+
+Here are the static interface method rules you need to be familiar with:
+
+1.  Like all methods in an interface, a static method is assumed to be public and will not
+    compile if marked as private or protected.
+2.  To reference the static method, a reference to the name of the interface must be used.
+
+```java
+ public interface Hop {
+  static int getJumpHeight() {
+    return 8;
+  }
+ }
+
+ public class Bunny implements Hop {
+  public void printDetails() {
+    System.out.println(getJumpHeight()); // DOES NOT COMPILE - static interface methods are not inherited by a class implementing the interface
+  }
+ }
+// Below is the correct reference
+  public class Bunny implements Hop {
+  public void printDetails() {
+    System.out.println(Hop.getJumpHeight());
+  }
+ }
+```
+
+a class that implements two interfaces containing static methods
+with the same signature will still compile at runtime.
+When you define a static method in an interface, it can only be called on the interface itself, not on the instances of the implementing class.
+
 # Understanding Polymorphism
+
+Java supports `polymorphism`, the property of an object to take on many different forms.
+
+```java
+ public class Primate {
+  public boolean hasHair() {
+    return true;
+  }
+ }
+ public interface HasTail {
+  public boolean isTailStriped();
+ }
+ public class Lemur extends Primate implements HasTail {
+  public boolean isTailStriped() {
+    return false;
+  }
+  public int age = 10;
+  public static void main(String[] args) {
+    Lemur lemur = new Lemur();
+    System.out.println(lemur.age);
+    // Using polymorphism: reference is of type HasTail, but object is of type Lemur
+    HasTail hasTail = lemur;
+    System.out.println(hasTail.isTailStriped());
+    // Using polymorphism: reference is of type Primate, but object is of type Lemur
+    Primate primate = lemur;
+    System.out.println(primate.hasHair());
+    }
+ }
+
+//Outputs 10 false true
+```
+
+- The ability of an instance of Lemur to be passed as an instance of an
+  interface it implements, HasTail, as well as an instance of one of its superclasses, Primate,
+  is the nature of polymorphism.
+
+- Once the object has been assigned a new reference type, only the methods and variables
+  available to that reference type are callable on the object without an explicit cast.
+
+```java
+HasTail hasTail = lemur;
+    System.out.println(hasTail.age);  // DOES NOT COMPILE - hasTail has acecss only to the methods defined in the HasTail class
+Primate primate = lemur;
+   System.out.println(primate.isTailStriped());  // DOES NOT COMPILE -  primate has access only to methods defi ned in the Primate class
+
+```
 
 ## Object vs. Reference
 
+all objects are accessed by reference,
+Regardless of the type of the reference you have for the object in memory, the object itself doesn’t change.
+
+```java
+ Lemur lemur = new Lemur();
+ Object lemurAsObject = lemur;
+
+```
+
+We can summarize this principle with the following two rules:
+
+1.  The type of the object determines which properties exist within the object in memory.
+2.  The type of the reference to the object determines which methods and variables are
+    accessible to the Java program.
+
 ## Casting Objects
+
+We can reclaim those references by `casting the object back to the specific subclass` it came from
+
+```java
+ Primate primate = lemur;
+ Lemur lemur2 = primate; // DOES NOT COMPILE
+ Lemur lemur3 = (Lemur)primate;
+ System.out.println(lemur3.age);
+```
+
+Here are some basic rules to keep in mind when casting variables:
+
+1.  Casting an object from a subclass to a superclass doesn’t require an explicit cast.
+2.  Casting an object from a superclass to a subclass requires an explicit cast.
+3.  The compiler will not allow casts to unrelated types.
+4.  Even when the code compiles without issue, an exception may be thrown at runtime if
+    the object being cast is not actually an instance of that class.
+
+Rule 3 example
+
+```java
+
+ public class Bird {}
+ public class Fish {
+  public static void main(String[] args) {
+    Fish fish = new Fish();
+    Bird bird = (Bird)fish;  // DOES NOT COMPILE - Bird and Fish are not related
+  }
+ }
+```
+
+```java
+ public class Rodent {
+ }
+ public class Capybara extends Rodent {
+  public static void main(String[] args) {
+    Rodent rodent = new Rodent();
+    Capybara capybara = (Capybara)rodent; // Throws ClassCastException at runtime - the object that was created is not related to the Capybara class in any way.
+  }
+ }
+```
+
+Related means that this object class extends other class.
+We are able to cast an object1 to object2 when object2 is a subclass of object1.
 
 ## Virtual Methods
 
+A `virtual method` is a method in which the specific implementation is not determined until runtime.
+In fact, all `non-final`, `non-static`, and `non-private` Java methods are considered virtual methods, since any of them can be overridden at runtime.
+
+```java
+public class Bird {
+  public String getName() {
+    return "Unknown";
+  }
+  public void displayInformation() {
+    System.out.println("The bird name is: "+getName());
+  }
+ }
+ public class Peacock extends Bird {
+  public String getName() {
+    return "Peacock";
+  }
+  public static void main(String[] args) {
+    Bird bird = new Peacock();
+    bird.displayInformation(); // Outputs The bird name is: Peacock - since it is of object peacock
+  }
+ }
+```
+
 ## Polymorphic Parameters
+
+One of the most useful applications of polymorphism is the ability to pass instances of
+a subclass or interface to a method.
+
+```java
+class Reptile {
+    public String getName() {
+        return "Reptile";
+    }
+}
+
+class Alligator extends Reptile {
+    public String getName() {
+        return "Alligator";
+    }
+}
+
+class Crocodile extends Reptile {
+    public String getName() {
+        return "Crocodile";
+    }
+}
+
+public class ZooWorker {
+    public static void feed(Reptile reptile) {
+        System.out.println("Feeding reptile " + reptile.getName());
+    }
+
+    public static void main(String[] args) {
+        feed(new Reptile());
+        // able to handle instances of Alligator and Crocodile without issue, because
+        // both are subclasses of the Reptile class.
+        feed(new Alligator());
+        feed(new Crocodile());
+
+    }
+}
+
+```
 
 ## Polymorphism and Method Overriding
 
+- Java eliminates this contradiction, thus disal
+  lowing a method from being overridden by a less accessible version of the method.
+- Java compiler disallows overriding meth
+  ods with new or broader exceptions.
+- Java only allows covariant return types for overridden methods.
+
 # Summary
+
+This chapter took the basic class structure we presented in Chapter 4 and expanded it by
+introducing the notion of inheritance. Java classes follow a multilevel single-inheritance
+pattern in which every class has exactly one direct parent class, with all classes eventu
+ally inheriting from java.lang.Object. Java interfaces simulate a limited form of multiple
+inheritance, since Java classes may implement multiple interfaces.
+
+Inheriting a class gives you access to all of the public and protected methods of the
+class, but special rules for constructors and overriding methods must be followed or the
+code will not compile. For example, if the parent class doesn’t include a no-argument con
+structor, an explicit call to a parent constructor must be provided in the child’s construc
+tors. Pay close attention on the exam to any class that defi nes a constructor with arguments
+and doesn’t defi ne a no-argument constructor.
+
+We reviewed overloaded, overridden, and hidden methods and showed how they differ,
+especially in terms of polymorphism. We also introduced the notion of hiding variables,
+although we strongly discourage this in practice as it often leads to confusing, diffi cult-to
+maintain code.
+
+We introduced abstract classes and interfaces and showed how you can use them to
+defi ne a platform for other developers to interact with. By defi nition, an abstract type can
+not be instantiated directly and requires a concrete subclass for the code to be used. Since
+default and static interface methods are new to Java 8, expect to see at least one question
+on them on the exam
+
+Finally, this chapter introduced the concept of polymorphism, central to the Java lan
+guage, and showed how objects can be accessed in a variety of forms. Make sure you
+understand when casts are needed for accessing objects, and be able to spot the difference
+between compile-time and runtime cast problems.
 
 # Exam Essentials
 
+-  Be able to write code that extends other classes.
+-  Understand the rules for method overriding.
+-  Understand the rules for hiding methods and variables.
+-  Recognize the difference between method overriding and method overloading.
+-  Be able to write code that creates and extends abstract classes.
+-  Be able to write code that creates, extends, and implements interfaces.
+-  Be able to write code that uses default and static interface methods.
+-  Understand polymorphism.
+-  Recognize valid reference casting.
+
+
+
 # Review Question Results
+
+330/334
