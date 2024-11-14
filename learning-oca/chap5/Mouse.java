@@ -10,7 +10,7 @@ public class Mouse extends Rodent {
     protected int tailLength = 8;
 
     public void getMouseDetails() {
-        System.out.println("[tail=" + tailLength + ",parentTail=" + super.tailLength + "]");
+        System.out.println("[tail=" + tailLength + ",parentTail=" + this.tailLength + "]");
     }
 
     public static void main(String[] args) {

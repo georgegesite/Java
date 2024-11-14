@@ -1362,4 +1362,25 @@ between compile-time and runtime cast problems.
 
 # Review Question Results
 
-330/334
+/1. B
+/2. E
+/3. A, B, D, E
+O4. C | C,E
+O5. A, D | A, D, E, F
+/6. D
+/7. B, C
+/8. F
+/9. A
+O10. C, F, G | B, C, E, F
+O11. D, E | A, D, E
+O12. A | B
+/13. A
+O14. B, C | C
+/15. B
+O16. A | E
+/17. B
+O18. C | E
+O19. A, C | A, C, F
+/20. A
+
+11/20

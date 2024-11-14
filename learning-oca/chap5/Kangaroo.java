@@ -1,5 +1,5 @@
 class Marsupial {
-    public static boolean isBiped() {
+    public  boolean isBiped() {
         return false;
     }
 
@@ -9,7 +9,7 @@ class Marsupial {
 }
 
 public class Kangaroo extends Marsupial {
-    public static boolean isBiped() {
+    public  boolean isBiped() {
         return true;
     }
 
@@ -21,5 +21,9 @@ public class Kangaroo extends Marsupial {
         Kangaroo joey = new Kangaroo();
         joey.getMarsupialDescription();
         joey.getKangarooDescription();
+
+        Marsupial chandler =joey;
+        chandler.getMarsupialDescription();
+
     }
 }
