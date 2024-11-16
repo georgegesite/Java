@@ -260,20 +260,256 @@ the JVM or a programmer.
 
 ## Runtime Exceptions p.314
 
-360/368
+- `ArithmeticException ` -Thrown by the JVM when code attempts to divide by zero
+
+```java
+int answer = 11 / 0;
+// Exception in thread "main" java.lang.ArithmeticException: / by zero
+```
+
+- `ArrayIndexOutOfBoundsException` - Thrown by the JVM when code uses an illegal index to access an array
+
+```java
+int[] countsOfMoose = new int[3];
+System.out.println(countsOfMoose[-1]);
+// Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: -1
+
+int total = 0;
+int[] countsOfMoose = new int[3];
+for (int i = 0; i <= countsOfMoose.length; i++)
+ total += countsOfMoose[i];
+
+ // Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 3
+```
+
+- `ClassCastException` - Thrown by the JVM when an attempt is made to cast an exception to a subclass of which it is not an instance
+
+```java
+String type = "moose";
+Integer number = (Integer) type; // DOES NOT COMPILE
+
+String type = "moose";
+Object obj = type;
+Integer number = (Integer) obj;
+
+// Exception in thread "main" java.lang.ClassCastException: java.lang.String cannot be cast to java.lang.Integer
+
+```
+
+- `IllegalArgumentException` - Thrown by the programmer to indicate that a method has been passed an illegal or inappropriate argument
+
+```java
+public static void setNumberEggs(int numberEggs) {
+ if (numberEggs < 0)
+ throw new IllegalArgumentException(
+ "# eggs must not be negative");
+ this.numberEggs = numberEggs;
+}
+
+// Exception in thread "main" java.lang.IllegalArgumentException: # eggs must not be negative
+```
+
+- `NullPointerException` - Thrown by the JVM when there is a null reference where an object is required
+
+```java
+String name;
+public void printLength() throws NullPointerException {
+ System.out.println(name.length());
+}
+
+// Exception in thread "main" java.lang.NullPointerException
+```
+
+- `NumberFormatException` - Thrown by the programmer when an attempt is made to convert a string to a numeric type but the string doesn’t have an appropriate format.
+  Java provides methods to convert strings to numbers. When these are passed an invalid value, they throw a NumberFormatException.
+
+```java
+Integer.parseInt("abc");
+
+// Exception in thread "main" java.lang.NumberFormatException: For input string: "abc"
+```
 
 ## Checked Exceptions p.317
 
+They must be handled or declared. They can be thrown by the programmer or by the JVM.
+
+- `FileNotFoundException` - Thrown programmatically when code tries to reference a fi le that does not exist
+- `IOException` - Thrown programmatically when there’s a problem reading or writing a fi le
+
 ## Errors p.317
+
+Errors extend the Error class. They are thrown by the JVM and should not be handled or declared.
+
+- `ExceptionInInitializerError` - Thrown by the JVM when a static initializer throwsan exception and doesn’t handle it
+
+```java
+static {
+ int[] countsOfMoose = new int[3];
+ int num = countsOfMoose[-1];
+}
+public static void main(String[] args) { }
+// Exception in thread "main" java.lang.ExceptionInInitializerError
+// Caused by: java.lang.ArrayIndexOutOfBoundsException: -1
+```
+
+- `StackOverflowError` - Thrown by the JVM when a method calls itself too many times (this is called `infinite recursion` because the method typically calls itself without end)
+
+```java
+public static void doNotCodeThis(int num) {
+ doNotCodeThis(1);
+}
+// Exception in thread "main" java.lang.StackOverflowError
+```
+
+- `NoClassDefFoundError` - Thrown by the JVM when a class that the code uses is available at compile time but not runtime. NoClassDefFoundError occurs when Java can’t find the class at runtime.
 
 # Calling Methods That Throw Exceptions p. 318
 
+```java
+class NoMoreCarrotsException extends Exception {}
+public class Bunny {
+ public static void main(String[] args) {
+ eatCarrot();// DOES NOT COMPILE  - checked exception must be handled or declared
+ }
+ private static void eatCarrot() throws NoMoreCarrotsException {
+ }
+}
+```
+
+```java
+public static void main(String[] args)
+ throws NoMoreCarrotsException {// declare exception - didn’t actually throw an exception; it just declared that it could.
+ eatCarrot();
+}
+public static void main(String[] args) {
+ try {
+ eatCarrot();
+ } catch (NoMoreCarrotsException e ) {// handle exception
+ System.out.print("sad rabbit");
+ }
+}
+```
+
+Declaring an unused exceptionisn’t considered unreachable code.
+It gives the method the option to change the implementation to throw that exception in the future.
+
 ## Subclasses p.319
+
+- When a class overrides a method from a superclass or implements a method from an interface,
+  it’s not allowed to add new checked exceptions to the method signature.
+- A subclass is allowed to declare fewer exceptions than the superclass or interface. This is
+  legal because callers are already handling them.
+
+```java
+class Hopper {
+ public void hop() throws CanNotHopException { }
+}
+class Bunny extends Hopper {
+ public void hop() { }
+}
+```
+
+- A subclass not declaring an exception is similar to a method declaring it throws an
+  exception that it never actually throws. Similarly, a class is allowed to declare a subclass of an exception type. The idea is the
+  same. The superclass or interface has already taken care of a broader type.
+
+```java
+class Hopper {
+ public void hop() throws Exception { }
+}
+class Bunny extends Hopper {
+ public void hop() throws CanNotHopException { }
+}
+```
+
+it’s okay to declare new runtime exceptions in a subclass method is that
+the declaration is redundant. Methods are free to throw any runtime exceptions they want
+without mentioning them in the method declaration.
+
+```java
+class Hopper {
+ public void hop() { }
+}
+class Bunny extends Hopper {
+ public void hop() throws IllegalStateException { }
+}
+```
 
 ## Printing an Exception p.321
 
+There are three ways to print an exception. You can let Java print it out, print just the message, or print where the stack trace comes from.
+
+```java
+ public static void main(String[] args) {
+ try {
+ hop();
+ } catch (Exception e) {
+ System.out.println(e);
+ System.out.println(e.getMessage());
+ e.printStackTrace();
+ }
+ }
+ private static void hop() {
+ throw new RuntimeException("cannot hop");
+ }
+
+ //java.lang.RuntimeException: cannot hop -  the exception type and message
+//cannot hop - just the message
+//java.lang.RuntimeException: cannot hop  -shows a stack trace
+//at trycatch.Handling.hop(Handling.java:15)
+//at trycatch.Handling.main(Handling.java:7)
+```
+
 # Summary p.323
+
+An exception indicates something unexpected happened. A method can handle an exception by catching it or declaring it for the caller to deal with. Many exceptions are thrown
+by Java libraries. You can throw your own exception with code such as throw new
+Exception().
+Subclasses of java.lang.Error are exceptions that a programmer should not attempt to
+handle. Subclasses of java.lang.RuntimeException are runtime (unchecked) exceptions.
+Subclasses of java.lang.Exception, but not java.lang.RuntimeException are checked
+exceptions. Java requires checked exceptions to be handled or declared.
+If a try statement has multiple catch blocks, at most one catch block can run. Java
+looks for an exception that can be caught by each catch block in the order they appear, and
+the fi rst match is run. Then execution continues after the try statement. If both catch and
+finally throw an exception, the one from finally gets thrown.
+Common runtime exceptions include:
+
+- ArithmeticException
+- ArrayIndexOutOfBoundsException
+- ClassCastException
+- IllegalArgumentException
+- NullPointerException
+- NumberFormatException
+  IllegalArgumentException and NumberFormatException are typically thrown by the
+  programmer, whereas the others are typically thrown by the JVM.
+  Common checked exceptions include:
+- IOException
+- FileNotFoundException
+  Common errors include:
+- ExceptionInInitializerError
+- StackOverflowError
+- NoClassDefFoundError
+  When a method overrides a method in a superclass or interface, it is not allowed to add
+  checked exceptions. It is allowed to declare fewer exceptions or declare a subclass of a
+  declared exception. Methods declare exceptions with the keyword throws.
 
 # Exam Essentials p.324
 
+Differentiate between checked and unchecked exceptions. Unchecked exceptions are also
+known as runtime exceptions and are subclasses of java.lang.RuntimeException. All
+other subclasses of java.lang.Exception are checked exceptions.
+Understand the flow of a try statement. A try statement must have a catch or a finally
+block. Multiple catch blocks are also allowed, provided no superclass exception type
+appears in an earlier catch block than its subclass. The finally block runs last regardless
+of whether an exception is thrown.
+Identify whether an exception is thrown by the programmer or the JVM. Illegal
+ArgumentException and NumberFormatException are commonly thrown by the programmer. Most of the other runtime exceptions are typically thrown by the JVM.
+Declare methods that declare exceptions. The throws keyword is used in a method declaration to indicate an exception might be thrown. When overriding a method, the method is
+allowed to throw fewer exceptions than the original version.
+Recognize when to use throw versus throws. The throw keyword is used when you actually want to throw an exception—for example, throw new RuntimeException(). The
+throws keyword is used in a method declaration
+
 # Review Questions Result
+
+364/368
