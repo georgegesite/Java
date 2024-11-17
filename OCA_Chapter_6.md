@@ -463,12 +463,13 @@ There are three ways to print an exception. You can let Java print it out, print
 # Summary p.323
 
 An exception indicates something unexpected happened. A method can handle an exception by catching it or declaring it for the caller to deal with. Many exceptions are thrown
-by Java libraries. You can throw your own exception with code such as throw new
-Exception().
-Subclasses of java.lang.Error are exceptions that a programmer should not attempt to
-handle. Subclasses of java.lang.RuntimeException are runtime (unchecked) exceptions.
-Subclasses of java.lang.Exception, but not java.lang.RuntimeException are checked
-exceptions. Java requires checked exceptions to be handled or declared.
+by Java libraries. You can throw your own exception with code such as throw newException().
+
+- Subclasses of java.lang.Error are exceptions that a programmer should not attempt to
+  handle.
+- Subclasses of java.lang.RuntimeException are runtime (unchecked) exceptions.
+- Subclasses of java.lang.Exception, but not java.lang.RuntimeException are checked exceptions. Java requires checked exceptions to be handled or declared.
+
 If a try statement has multiple catch blocks, at most one catch block can run. Java
 looks for an exception that can be caught by each catch block in the order they appear, and
 the fi rst match is run. Then execution continues after the try statement. If both catch and
@@ -496,19 +497,19 @@ Common runtime exceptions include:
 
 # Exam Essentials p.324
 
-Differentiate between checked and unchecked exceptions. Unchecked exceptions are also
-known as runtime exceptions and are subclasses of java.lang.RuntimeException. All
-other subclasses of java.lang.Exception are checked exceptions.
-Understand the flow of a try statement. A try statement must have a catch or a finally
-block. Multiple catch blocks are also allowed, provided no superclass exception type
-appears in an earlier catch block than its subclass. The finally block runs last regardless
-of whether an exception is thrown.
-Identify whether an exception is thrown by the programmer or the JVM. Illegal
-ArgumentException and NumberFormatException are commonly thrown by the programmer. Most of the other runtime exceptions are typically thrown by the JVM.
-Declare methods that declare exceptions. The throws keyword is used in a method declaration to indicate an exception might be thrown. When overriding a method, the method is
-allowed to throw fewer exceptions than the original version.
-Recognize when to use throw versus throws. The throw keyword is used when you actually want to throw an exception—for example, throw new RuntimeException(). The
-throws keyword is used in a method declaration
+- `Differentiate between checked and unchecked exceptions.` Unchecked exceptions are also
+  known as runtime exceptions and are subclasses of java.lang.RuntimeException. All
+  other subclasses of java.lang.Exception are checked exceptions.
+- `Understand the flow of a try statement.` A try statement must have a catch or a finally
+  block. Multiple catch blocks are also allowed, provided no superclass exception type
+  appears in an earlier catch block than its subclass. The finally block runs last regardless
+  of whether an exception is thrown.
+- `Identify whether an exception is thrown by the programmer or the JVM.` Illegal
+  ArgumentException and NumberFormatException are commonly thrown by the programmer. Most of the other runtime exceptions are typically thrown by the JVM.
+  Declare methods that declare exceptions. The throws keyword is used in a method declaration to indicate an exception might be thrown. When overriding a method, the method is
+  allowed to throw fewer exceptions than the original version.
+- `Recognize when to use throw versus throws.` The throw keyword is used when you actually want to throw an exception—for example, throw new RuntimeException(). The
+  throws keyword is used in a method declaration
 
 # Review Questions Result
 
