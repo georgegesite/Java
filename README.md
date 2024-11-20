@@ -75,3 +75,24 @@ A java file can only contain one public class
 
 “Legal,” “valid,” and “compiles” are all synonyms in the Java exam
 world.
+
+## Static Imports
+
+Syntax for importing static fields is:  import static <package>.<classname>.\*; or import static <package>.<classname>.<fieldname>;
+
+## Default Values
+
+Following are the default values that instance variables are initialized with if not initialized explicitly:
+types (byte, short, char, int, long, float, double) to 0 ( or 0.0 ).
+All Object types to null.
+boolean to false.
+
+## Main Method Valid
+
+A valid declaration of "the" main() method must be public and static, should return void, and should take a single array of Strings as a parameter.
+
+## Important
+
+- Interfaces, classes, and enums are all "types".
+- "State", on the other hand, is represented by instance fields. Only a class can have instance fields and therefore, only a class can have a state.
+- Java's support for multiple inheritance of type(Interfaces, classes, and enums).
