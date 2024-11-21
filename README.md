@@ -92,6 +92,7 @@ boolean to false.
 A valid declaration of "the" main() method must be public and static, should return void, and should take a single array of Strings as a parameter.
 
 ## Equalty
+
 - == checks reference equality for both String and StringBuilder.
 - String.equals() checks content equality.
 - StringBuilder.equals() behaves like == and checks reference equality (it does not compare content).
@@ -103,3 +104,17 @@ A valid declaration of "the" main() method must be public and static, should ret
 - Interfaces, classes, and enums are all "types".
 - "State", on the other hand, is represented by instance fields. Only a class can have instance fields and therefore, only a class can have a state.
 - Java's support for multiple inheritance of type(Interfaces, classes, and enums).
+
+## DateTime
+
+```java
+System.out.println(date.format(DateTimeFormatter.ISO_LOCAL_DATE)); // 2020-01-20
+System.out.println(time.format(DateTimeFormatter.ISO_LOCAL_TIME)); // 11:12:34
+System.out.println(dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)); // 2020-01-20T11:12:34
+
+DateTimeFormatter shortF = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+DateTimeFormatter mediumF = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+
+System.out.println(shortF.format(dateTime)); // 1/20/20 11:12 AM
+System.out.println(mediumF.format(dateTime)); // Jan 20, 2020 11:12:34 AM
+```
