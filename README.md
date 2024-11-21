@@ -91,6 +91,13 @@ boolean to false.
 
 A valid declaration of "the" main() method must be public and static, should return void, and should take a single array of Strings as a parameter.
 
+## Equalty
+- == checks reference equality for both String and StringBuilder.
+- String.equals() checks content equality.
+- StringBuilder.equals() behaves like == and checks reference equality (it does not compare content).
+- To compare content between a String and a StringBuilder, use StringBuilder.toString() to convert StringBuilder to a String.
+- Java does not allow you to compare String and StringBuilder using ==
+
 ## Important
 
 - Interfaces, classes, and enums are all "types".

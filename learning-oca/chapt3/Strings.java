@@ -6,5 +6,15 @@ public class Strings {
         sb.append("o");
 
         System.out.println(s + sb);
+
+        String word = "Fluffy";
+        String word2 = new String("Fluffy");
+        String word3 = "Fluffy";
+
+        System.out.println(word == word2);
+        System.out.println(word.equals(word2));
+        System.out.println(word == word3);
+
+        System.out.println("Hello" + 2 + '1' + false + true);
     }
 }
