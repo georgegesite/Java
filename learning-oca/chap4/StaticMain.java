@@ -11,6 +11,12 @@ public class StaticMain {
         Koala.main(new String[0]); // call static method
         // Prints count = 0
 
+        Koala koala = new Koala(); // create instance
+        System.out.println(koala.count);
+        koala.count = 1;
+        koala = null;
+        System.out.println(koala.count);
+
         StringBuilder name = new StringBuilder("HEllo");
         speak(name);
         System.out.println(name); // Webby
