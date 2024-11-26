@@ -513,4 +513,50 @@ Common runtime exceptions include:
 
 # Review Questions Result
 
-364/368
+O1. B, C | B
+/2. B, D
+/3. C
+/4. B
+/5. A, B, D
+/6. C
+O7. D | C
+O8. D | E
+/9. B
+/10. E
+O11. G| A
+O12.A, B, D, E, F | A, B, D, G
+O13. E | A, B, C, E.
+O14. D, A | A, C, D, E
+O15. A, B, D, E
+O16. A | B
+O17. A, C | A, C, D, E
+O18. B, E | A, B, C, E
+O19. B, C | C ,E
+/20. A, E
+
+9/20
+
+Learnings
+
+- if main doesnt catch exception, it ends program.
+- You can declare a method with Exception as the return type.
+- You can declare any subclass of Error in the throws part of a method declaration.
+- You can declare any subclass of Exception in the throws part of a method
+  declaration
+- Runtime exceptions can be thrown in any method
+- A method that declares an exception isn’t required to throw one
+- matches the signature in the interface or superclass is allowed
+
+```java
+interface Roar {
+ void roar() throws HasSoreThroatException;
+}
+class Lion implements Roar {// INSERT CODE HERE
+void roar() throws HasSoreThroatException;
+}
+```
+
+- Checked exceptions are allowed to be handled or declared.
+- Checked exceptions are required to be handled or declared.
+- Errors are allowed to be handled or declared.
+- Runtime exceptions are allowed to be handled or declared.
