@@ -19,11 +19,13 @@ public class Strings {
 
         StringBuilder sb1 = new StringBuilder("Duke");
         String sb2 = sb1.toString();
-        String duke = "Duke";
         String sb3 = sb2;
 
-        System.out.println(sb2.equals(sb3));
-        System.out.println(sb2.equals(duke));
-        System.out.println(sb2.equals("Duke"));
+        String duke = "Duke";
+        String sb4 = sb1.toString();
+
+        System.out.println(sb2 == sb3);
+        System.out.println(sb2 == sb4);
+        System.out.println(sb2 == duke);
     }
 }
