@@ -118,3 +118,137 @@ DateTimeFormatter mediumF = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.ME
 System.out.println(shortF.format(dateTime)); // 1/20/20 11:12 AM
 System.out.println(mediumF.format(dateTime)); // Jan 20, 2020 11:12:34 AM
 ```
+# Java Notes
+
+## Variables
+- **Instance Variables** and **Static Variables**:
+  - Receive a default value if not explicitly initialized.
+- **Local Variables**:
+  - Visibility cannot be specified.
+  - Accessible only within the block in which they are declared.
+
+---
+
+## Java Operators
+- **`instanceof`**:
+  - A valid Java operator.
+
+---
+
+## Exceptions
+- You can declare anything that is a `Throwable` or a subclass of `Throwable` in the `throws` clause.
+
+---
+
+## Rules for `Switch` Statement
+- **Unsupported Types**: 
+  - `boolean`, `long`, `float`, and `double` cannot be used.
+- **Supported Types**: 
+  - `String`, `byte`, `char`, `short`, `int`, and their wrapper classes (`Byte`, `Character`, `Short`, `Integer`), and enums.
+  - `String` is allowed since Java 7.
+- **Case Labels**:
+  - Must be **compile-time constants**. 
+  - Example:
+    ```java
+    int x = 10;
+    final int I = 2 * 3;
+    switch(x) { 
+       case I: System.out.println(x); // Valid because I is a compile-time constant.
+    }
+    ```
+- **Range Constraints**:
+  - The `switch` variable must be large enough to hold all case constants.
+  - Example (Invalid):
+    ```java
+    byte b = 10;
+    switch(b) {
+        case 100: System.out.print(100); // OK
+        case 200: System.out.print(200); // Will not compile
+    }
+    ```
+- **Uniqueness**:
+  - No two case constant expressions may have the same value.
+- **Default Label**:
+  - Optional.
+  - At most one `default` label is allowed per `switch` statement.
+- **Empty Switch Block**:
+  - Valid construct.
+
+---
+
+## Class-Level and Instance-Level Fields
+- **Class-Level (Static Fields)**:
+  - Can be accessed from anywhere in the class (static or non-static methods) and from outside the class depending on their accessibility.
+- **Instance-Level Fields**:
+  - Can only be accessed from instance methods in the class.
+
+---
+
+## Multiple Inheritance
+- **Functional Interface**:
+  - Must have exactly one abstract method.
+  - May have other default or static methods.
+- **Inheritance Rules**:
+  - A class can implement an interface and extend a class.
+  - An interface may extend another interface.
+  - An interface cannot implement another interface.
+  - A final class cannot be extended.
+  - An abstract class can be extended by:
+    - An abstract class.
+    - A concrete class.
+  - A concrete class can be extended by:
+    - An abstract class.
+    - A concrete class.
+
+---
+
+## Arrays
+- You can create arrays of any type with length zero.
+
+---
+
+## `Predicate` Interface
+- A functional interface with one abstract method:
+  ```java
+  public boolean test(T t);
+
+## Casting
+- **Explicit Casting**:
+  - Required for converting:
+    - `short` to `char`
+    - `char` to `short`
+
+---
+
+## Abstract Methods
+- **Definition**:
+  - Abstract methods describe a behavior but do not implement it.
+- **Rules**:
+  - Must be overridden in the subclass to implement the behavior.
+  - If a subclass does not override it, the subclass must also be declared abstract.
+
+---
+
+## Primitive Types
+- **Integral Types**:
+  - Include `byte`, `short`, `int`, `long`, and `char`.
+
+  Java OCA 8 Self Study Scores
+Chapter 1 - 16/23 - 69%
+Chapter 2 - 14/20 - 70%
+Chapter 3 - 20/33 - 61%
+Chapter 4 - 15/29 - 52%
+Chapter 5 - 11/20 - 55%
+Chapter 6 - 10/20 - 50%
+
+Java OCA 8 Self Study Scores
+Chapter 1 - 16/23 - 69%
+Chapter 2 - 14/20 - 70%
+Chapter 3 - 20/33 - 61%
+Chapter 4 - 20/29 - 69%
+Chapter 5 - 14/20 - 70%
+Chapter 6 - 16/20 - 80%
+
+
+
+Chapter 4 - 22/29 - 69%
