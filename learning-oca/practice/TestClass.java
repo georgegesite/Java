@@ -1,25 +1,17 @@
 public class TestClass {
     public static void main(String args[]) {
-        int i;
-        int j;
-        for (i = 0, j = 0; j < 1; ++j, i++) {
-            System.out.println(i + " " + j);
-        }
-     crazyLoop();
+        int i = 0;
+        boolean bool1 = true;
+        boolean bool2 = false;
+        boolean bool = false;
+        bool = (bool2 & method1(i++)); // 1
+        bool = (bool2 && method1(i++)); // 2
+        bool = (bool1 | method1(i++)); // 3
+        bool = (bool1 || method1(i++)); // 4
 
-    } 
+        System.out.println(i);
+    }
 
-    public static void crazyLoop() {
-        int c = 0;
-        JACK: while (c < 8) {
-            JILL: System.out.println(c);
-            if (c > 3)
-                break JACK;
-            else
-                c++;
-        }
-    }}
+    public static boolean method1(int i){        return i>0 ? true : false;    }
 
-    
-
-    
+    }
