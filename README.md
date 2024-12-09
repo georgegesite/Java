@@ -118,9 +118,11 @@ DateTimeFormatter mediumF = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.ME
 System.out.println(shortF.format(dateTime)); // 1/20/20 11:12 AM
 System.out.println(mediumF.format(dateTime)); // Jan 20, 2020 11:12:34 AM
 ```
+
 # Java Notes
 
 ## Variables
+
 - **Instance Variables** and **Static Variables**:
   - Receive a default value if not explicitly initialized.
 - **Local Variables**:
@@ -130,29 +132,32 @@ System.out.println(mediumF.format(dateTime)); // Jan 20, 2020 11:12:34 AM
 ---
 
 ## Java Operators
+
 - **`instanceof`**:
   - A valid Java operator.
 
 ---
 
 ## Exceptions
+
 - You can declare anything that is a `Throwable` or a subclass of `Throwable` in the `throws` clause.
 
 ---
 
 ## Rules for `Switch` Statement
-- **Unsupported Types**: 
+
+- **Unsupported Types**:
   - `boolean`, `long`, `float`, and `double` cannot be used.
-- **Supported Types**: 
+- **Supported Types**:
   - `String`, `byte`, `char`, `short`, `int`, and their wrapper classes (`Byte`, `Character`, `Short`, `Integer`), and enums.
   - `String` is allowed since Java 7.
 - **Case Labels**:
-  - Must be **compile-time constants**. 
+  - Must be **compile-time constants**.
   - Example:
     ```java
     int x = 10;
     final int I = 2 * 3;
-    switch(x) { 
+    switch(x) {
        case I: System.out.println(x); // Valid because I is a compile-time constant.
     }
     ```
@@ -177,6 +182,7 @@ System.out.println(mediumF.format(dateTime)); // Jan 20, 2020 11:12:34 AM
 ---
 
 ## Class-Level and Instance-Level Fields
+
 - **Class-Level (Static Fields)**:
   - Can be accessed from anywhere in the class (static or non-static methods) and from outside the class depending on their accessibility.
 - **Instance-Level Fields**:
@@ -185,6 +191,7 @@ System.out.println(mediumF.format(dateTime)); // Jan 20, 2020 11:12:34 AM
 ---
 
 ## Multiple Inheritance
+
 - **Functional Interface**:
   - Must have exactly one abstract method.
   - May have other default or static methods.
@@ -203,16 +210,20 @@ System.out.println(mediumF.format(dateTime)); // Jan 20, 2020 11:12:34 AM
 ---
 
 ## Arrays
+
 - You can create arrays of any type with length zero.
 
 ---
 
 ## `Predicate` Interface
+
 - A functional interface with one abstract method:
   ```java
   public boolean test(T t);
+  ```
 
 ## Casting
+
 - **Explicit Casting**:
   - Required for converting:
     - `short` to `char`
@@ -221,6 +232,7 @@ System.out.println(mediumF.format(dateTime)); // Jan 20, 2020 11:12:34 AM
 ---
 
 ## Abstract Methods
+
 - **Definition**:
   - Abstract methods describe a behavior but do not implement it.
 - **Rules**:
@@ -230,10 +242,55 @@ System.out.println(mediumF.format(dateTime)); // Jan 20, 2020 11:12:34 AM
 ---
 
 ## Primitive Types
+
 - **Integral Types**:
   - Include `byte`, `short`, `int`, `long`, and `char`.
 
-  Java OCA 8 Self Study Scores
+## LABELS
+
+- Remember that a labeled break or continue statement must always exist inside the loop where the label is declared.
+- break LABEL; would be valid only when it is within the block of code under the scope of the label LABEL.
+
+```java
+public class TestLabeledBreak {
+    public static void main(String[] args) {
+        outerLoop:  // Label for the outer loop
+        for (int i = 0; i < 5; i++) {
+            innerLoop:  // Label for the inner loop
+            for (int j = 0; j < 5; j++) {
+                System.out.println("i = " + i + ", j = " + j);
+                if (j == 2) {
+                    // This break refers to the innerLoop
+                    break innerLoop;
+                }
+                if (i == 3 && j == 1) {
+                    // This break refers to the outerLoop
+                    break outerLoop;
+                }
+            }
+        }
+    }
+}
+```
+
+```java
+public class TestLabeledBreakInvalid {
+    public static void main(String[] args) {
+        outerLoop:  // Label for the outer loop
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                System.out.println("i = " + i + ", j = " + j);
+            }
+        }
+
+        // This will cause an error because break is outside the outer loop's scope
+        break outerLoop;  // Invalid, will result in compilation error
+    }
+}
+
+```
+
+Java OCA 8 Self Study Scores
 Chapter 1 - 16/23 - 69%
 Chapter 2 - 14/20 - 70%
 Chapter 3 - 20/33 - 61%
@@ -248,7 +305,5 @@ Chapter 3 - 20/33 - 61%
 Chapter 4 - 20/29 - 69%
 Chapter 5 - 14/20 - 70%
 Chapter 6 - 16/20 - 80%
-
-
 
 Chapter 4 - 22/29 - 69%
