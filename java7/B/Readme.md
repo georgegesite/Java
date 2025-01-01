@@ -25,3 +25,5 @@ export PATH=$PATH:$JAVA_HOME/bin
 To check your installation:
 
 java -version
+
+https://stackoverflow.com/questions/14788345/how-to-install-the-jdk-on-ubuntu-linux
