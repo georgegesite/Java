@@ -7,10 +7,9 @@ interface B {
     public void functionB();
 }
 
-abstract public class B6 extends A implements B {
+public abstract class B6 extends A implements B {
 
     // public void functionC() {
-
     // }
 
     public static void main(String[] args) {
