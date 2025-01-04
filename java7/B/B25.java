@@ -11,6 +11,7 @@ abstract class Message {
 }
 
 class SMS extends Message {
+    
     String msg;
 
     public String doMessage() {
@@ -23,6 +24,7 @@ class SMS extends Message {
 }
 
 class Viber extends Message {
+
     String msg;
 
     public String doMessage() {
