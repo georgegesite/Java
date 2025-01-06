@@ -1,4 +1,4 @@
-package chap3;
+
 import java.util.ArrayList;
 
 interface Predicate<T> {
@@ -30,8 +30,10 @@ public class Lambda {
         al.add(new Person("John", 20));
         al.add(new Person("Doe", 17));
 
-        printImportantData(al, (Person d)->{ return d.age>18; } );
-        printImportantData(al, (Person d) -> d.age > 18); 
-        printImportantData(al, d->d.age>1);
+        printImportantData(al, (Person d) -> {
+            return d.age > 18;
+        });
+        printImportantData(al, (Person d) -> d.age > 18);
+        printImportantData(al, d -> d.age > 1);
     }
 }
