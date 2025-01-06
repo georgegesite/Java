@@ -1,3 +1,4 @@
+package chap3;
 public class CheckEquality {
 
     public static void main(String[] args) {

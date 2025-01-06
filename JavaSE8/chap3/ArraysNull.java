@@ -1,3 +1,5 @@
+package chap3;
+
 public class ArraysNull {
     public static void main(String[] args) {
         int[] var1 = null;

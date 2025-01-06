@@ -1,3 +1,4 @@
+package chap3;
 public class TestClass {
     char c;
 

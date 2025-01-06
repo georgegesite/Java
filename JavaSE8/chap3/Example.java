@@ -1,3 +1,4 @@
+package chap3;
 class StringWrapper { 
     private String theVal;
 
