@@ -12,14 +12,14 @@ public class ApplicationController {
     @Autowired
     ApplicationService applicationService;
 
-    // Call this using - http://localhost:8080/index/search?name=Alex
+    // Call this using - http://localhost:8081/index/search?name=Alex
     @GetMapping("/search")
     public ResponseEntity<List<String>> searchUsers(@RequestParam("name") String name) {
         // Implementation to search users based on the provided name
         return ResponseEntity.ok(applicationService.searchUsers(name));
     }
 
-    // Call this using - http://localhost:8080/index/users/{userId}
+    // Call this using - http://localhost:8081/index/users/{userId}
     @GetMapping("/users/{userId}")
     public ResponseEntity<String> getUserDetails(@PathVariable Long userId) {
         // Implementation to fetch user details based on the provided userId
