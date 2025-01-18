@@ -26,4 +26,8 @@ public class ApplicationController {
         String userDetails = "User details for user ID: " + userId;
         return ResponseEntity.ok(userDetails);
     }
+
+    // Beans
+    // Declare Class in constructor
+    // Spring is gonna use this constuctor as a way identify which dependencies are needed and then inject them.
 }
