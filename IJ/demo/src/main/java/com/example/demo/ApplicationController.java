@@ -15,7 +15,7 @@ public class ApplicationController {
     Logger logger = LoggerFactory.getLogger(LoggingController.class);
 
     @Autowired
-    ApplicationService applicationService;
+    private ApplicationService applicationService;
 
     // Call this using - http://localhost:8081/index/search?name=Alex
     @GetMapping("/search")
@@ -41,5 +41,9 @@ public class ApplicationController {
 
     // Beans
     // Declare Class in constructor
-    // Spring is gonna use this constuctor as a way identify which dependencies are needed and then inject them.
+    // Spring is going to use this constructor as a way to identify which dependencies are needed and then inject them.
+
+    //Strong dependencies are bad -
+    //A change in a dependency generates a change in other components
+    // Testing becomes harder to develop and maintain
 }
