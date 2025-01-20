@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring MVC (Jakarta namespace)
+    implementation 'org.springframework:spring-webmvc:6.1.0'
+
+    // Embedded Tomcat (Jakarta namespace)
+    implementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.14'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:10.1.14'
+
+    // JSP and JSTL (Jakarta namespace)
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:2.0.0'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0'
+
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+}
+
+
+tasks.named('war') {
+    enabled = true
+}
+
+tasks.register('run', JavaExec) {
+    group = 'application'
+    description = 'Run the Spring MVC app using embedded Tomcat'
+    mainClass.set('org.example.SpringMvcApplication')
+    classpath = sourceSets.main.runtimeClasspath
+}
