@@ -11,6 +11,5 @@ public class Main {
         numbers.forEach((n) -> {
             System.out.println(n);
         });
-        // some updates
     }
 }
